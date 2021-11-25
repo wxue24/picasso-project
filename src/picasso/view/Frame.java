@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 import picasso.model.Pixmap;
 import picasso.util.ThreadedCommand;
@@ -27,10 +29,8 @@ public class Frame extends JFrame {
 		Canvas canvas = new Canvas(this);
 		canvas.setSize(size);
 		
-		// add input field
-		Input input = new Input();
-		input.setRows(5);
-		input.setLineWrap(true);
+		// create input field
+		Input input = new Input(4);
 		
 		// add commands to test here
 		ButtonPanel commands = new ButtonPanel(canvas);
@@ -38,7 +38,7 @@ public class Frame extends JFrame {
 		commands.add("Evaluate", new ThreadedCommand<Pixmap>(canvas, new Evaluater()));
 		commands.add("Save", new Writer());
 		
-		// add frame to hold input and commands
+		// add panel to hold input and commands
 		JPanel inputCommands = new JPanel();
 		inputCommands.setLayout(new BoxLayout(inputCommands, BoxLayout.Y_AXIS));
 		inputCommands.add(commands);
