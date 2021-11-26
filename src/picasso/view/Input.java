@@ -16,9 +16,13 @@ import javax.swing.text.Document;
 public class Input extends JScrollPane {
 	
 	JTextArea textArea;
+	
+	public Input() {
+		this(4);
+	}
 
 	/**
-	 * 
+	 * @param rows number of rows for input area
 	 */
 	public Input(int rows) {
 		createTextArea(rows);
@@ -31,6 +35,14 @@ public class Input extends JScrollPane {
 		textArea = new JTextArea();
 		textArea.setRows(rows);
 		textArea.setLineWrap(true);
+	}
+	
+	/**
+	 * 
+	 * @return text from text area
+	 */
+	public String getText() {
+		return textArea.getText();
 	}
 
 
