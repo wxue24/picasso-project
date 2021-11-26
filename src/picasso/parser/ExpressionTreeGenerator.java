@@ -34,24 +34,28 @@ public class ExpressionTreeGenerator {
 	 * @return ExpressionTreeNode representing the root node of the given infix
 	 *         formula
 	 */
-	public ExpressionTreeNode makeExpression(String infix) {
-		Stack<Token> postfix = infixToPostfix(infix);
+	public ExpressionTreeNode makeExpression(String infix) throws IllegalArgumentException {
+		try {
+			Stack<Token> postfix = infixToPostfix(infix);
 
-		if (postfix.isEmpty()) {
-			return null;
+			if (postfix.isEmpty()) {
+				return null;
+			}
+
+			// System.out.println("Process postfix expression");
+			SemanticAnalyzer semAnalyzer = SemanticAnalyzer.getInstance();
+
+			ExpressionTreeNode root = semAnalyzer.generateExpressionTree(postfix);
+
+			// Is this the best place to put this check?
+			if (!postfix.isEmpty()) {
+				throw new ParseException(
+						"Extra operands without operators or functions");
+			}
+			return root;
+		} catch (Exception e) {
+			throw new IllegalArgumentException("Unable to generate expression tree", e);
 		}
-
-		// System.out.println("Process postfix expression");
-		SemanticAnalyzer semAnalyzer = SemanticAnalyzer.getInstance();
-
-		ExpressionTreeNode root = semAnalyzer.generateExpressionTree(postfix);
-
-		// Is this the best place to put this check?
-		if (!postfix.isEmpty()) {
-			throw new ParseException(
-					"Extra operands without operators or functions");
-		}
-		return root;
 	}
 
 	/**

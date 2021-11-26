@@ -32,10 +32,13 @@ public class Frame extends JFrame {
 		// create input field
 		Input input = new Input();
 		
+		// create error window
+		ErrorWindow errorWindow = new ErrorWindow();
+		
 		// add commands to test here
 		ButtonPanel commands = new ButtonPanel(canvas);
 		commands.add("Open", new Reader());
-		commands.add("Evaluate", new ThreadedCommand<Pixmap>(canvas, new Evaluater(input)));
+		commands.add("Evaluate", new ThreadedCommand<Pixmap>(canvas, new Evaluater(input, errorWindow)));
 		commands.add("Save", new Writer());
 		
 		// add panel to hold input and commands

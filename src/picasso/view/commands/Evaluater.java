@@ -6,7 +6,9 @@ import java.awt.Dimension;
 import picasso.model.Pixmap;
 import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
+import picasso.parser.language.expressions.RGBColor;
 import picasso.util.Command;
+import picasso.view.ErrorWindow;
 import picasso.view.Input;
 
 /**
@@ -18,10 +20,12 @@ import picasso.view.Input;
 public class Evaluater implements Command<Pixmap> {
 	public static final double DOMAIN_MIN = -1;
 	public static final double DOMAIN_MAX = 1;
-	Input input;
-	
-	public Evaluater(Input input) {
+	private Input input;
+	private ErrorWindow errorWindow;
+
+	public Evaluater(Input input, ErrorWindow errorWindow) {
 		this.input = input;
+		this.errorWindow = errorWindow;
 	}
 
 	/**
@@ -59,15 +63,32 @@ public class Evaluater implements Command<Pixmap> {
 		// generate expression trees from strings, or you can create expression
 		// objects directly (as in the commented statement below).
 
-//		String test = "floor(y)";
-//		String test = "abs(y)";
-		//String test = "x + y";
+//					String test = "floor(y)";
+//					String test = "abs(y)";
+		// String test = "x + y";
 		String test = input.getText();
 
 		ExpressionTreeGenerator expTreeGen = new ExpressionTreeGenerator();
-		return expTreeGen.makeExpression(test);
+		try {
 
-		// return new Multiply( new X(), new Y() );
+			ExpressionTreeNode node = expTreeGen.makeExpression(test);
+			if(node != null) return node;
+			else return handleCreateExpressionError();
+			// return new Multiply( new X(), new Y() );
+		} catch (Exception e) {
+			return handleCreateExpressionError();
+		}
+	}
+	
+	/**
+	 * Shows any errors when generating the expression tree in an error window
+	 * @return Expression tree node for black canvas
+	 */
+	private ExpressionTreeNode handleCreateExpressionError() {
+		ExpressionTreeGenerator expTreeGen = new ExpressionTreeGenerator();
+		errorWindow.showError("Unable to create image from input");
+		// Set canvas to black
+		return expTreeGen.makeExpression("-1");
 	}
 
 }
