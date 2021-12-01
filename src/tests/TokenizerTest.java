@@ -88,7 +88,7 @@ public class TokenizerTest {
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
 		
-<<<<<<< HEAD
+
 		expression = "ceil(x)";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new CeilToken(), tokens.get(0));
@@ -96,14 +96,14 @@ public class TokenizerTest {
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
 		
-=======
+
 		expression = "abs(x)";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new AbsToken(), tokens.get(0));
 		assertEquals(new LeftParenToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
->>>>>>> main
+
 	}
 
 	@Test
