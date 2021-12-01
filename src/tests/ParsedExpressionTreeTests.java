@@ -79,6 +79,8 @@ public class ParsedExpressionTreeTests {
 		
 		e = parser.makeExpression("ceil( x + y)");
 		assertEquals(new Ceil(new Addition(new X(), new Y())), e);
+		
+	}
 
 	
 	@Test
