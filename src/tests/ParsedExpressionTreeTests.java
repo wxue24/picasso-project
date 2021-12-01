@@ -44,7 +44,7 @@ public class ParsedExpressionTreeTests {
 		assertEquals(new Addition(new X(), new Y()), e);
 		
 		// no spaces!
-		ExpressionTreeNode e = parser.makeExpression("x+y");
+		e = parser.makeExpression("x+y");
 		assertEquals(new Addition(new X(), new Y()), e);
 
 		e = parser.makeExpression("[1,.3,-1] + y");
@@ -88,7 +88,7 @@ public class ParsedExpressionTreeTests {
 		ExpressionTreeNode e = parser.makeExpression("abs( x )");
 		assertEquals(new Abs(new X()), e);
 
-		e = parser.makeExpression("floor( x + y )");
+		e = parser.makeExpression("abs( x + y )");
 		assertEquals(new Abs(new Addition(new X(), new Y())), e);
 
 	}
