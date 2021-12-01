@@ -11,7 +11,7 @@ import picasso.parser.language.ExpressionTreeNode;
 public class Ceil extends UnaryFunction {
 
 	/**
-	 * Create a ceiling expression that takes as a parameter the given expression
+	 * Create a ceil expression that takes as a parameter the given expression
 	 * 
 	 * @param param the expression to ceil
 	 */
