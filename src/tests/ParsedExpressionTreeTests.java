@@ -71,6 +71,16 @@ public class ParsedExpressionTreeTests {
 		e = parser.makeExpression("floor( x + y )");
 		assertEquals(new Floor(new Addition(new X(), new Y())), e);
 	}
+<<<<<<< HEAD
+	@Test
+	public void ceilFunctionTests() {
+		ExpressionTreeNode e  = parser.makeExpression("ceil( x )");
+		assertEquals(new Ceil(new X()), e);
+		
+		e = parser.makeExpression("ceil( x + y)");
+		assertEquals(new Ceil(new Addition(new X(), new Y())), e);
+
+=======
 	
 	@Test
 	public void absFunctionTests() {
@@ -79,6 +89,7 @@ public class ParsedExpressionTreeTests {
 
 		e = parser.makeExpression("floor( x + y )");
 		assertEquals(new Abs(new Addition(new X(), new Y())), e);
+>>>>>>> main
 	}
 
 }
