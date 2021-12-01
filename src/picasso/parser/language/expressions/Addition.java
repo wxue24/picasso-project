@@ -31,21 +31,6 @@ public class Addition extends BinaryOperation {
 		return left + " + " + right;
 	}
 	
-	/**
-	 * Determines if two Additions are equivalent (represent the same value.)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!(obj instanceof Addition)) {
-			return false;
-		}
-		Addition other = (Addition) obj;
-		return left.equals(other.left) && right.equals(other.right);
-	}
+
 
 }
