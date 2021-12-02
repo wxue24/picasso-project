@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Handles reading the available built-in functions from a file.
+ * 
  * 
  * @author Robert C. Duvall
  * @author Sara Sprenkle

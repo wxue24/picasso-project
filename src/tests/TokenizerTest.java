@@ -14,6 +14,7 @@ import picasso.parser.language.expressions.X;
 import picasso.parser.tokens.*;
 import picasso.parser.tokens.chars.*;
 import picasso.parser.tokens.functions.*;
+import picasso.parser.tokens.operations.PlusToken;
 
 public class TokenizerTest {
 
@@ -88,12 +89,22 @@ public class TokenizerTest {
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
 		
+
+		expression = "ceil(x)";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new CeilToken(), tokens.get(0));
+		assertEquals(new LeftParenToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("x"), tokens.get(2));
+		assertEquals(new RightParenToken(), tokens.get(3));
+		
+
 		expression = "abs(x)";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new AbsToken(), tokens.get(0));
 		assertEquals(new LeftParenToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
+
 	}
 
 	@Test
@@ -107,6 +118,14 @@ public class TokenizerTest {
 		// TODO: Check the tokens...
 	}
 
-	// TODO: Test arithmetic (rather than function-based) expressions ...
+	@Test
+	public void testTokenizeOperations() {
+		String expression = "x + y";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new IdentifierToken("x"), tokens.get(0));
+		assertEquals(new PlusToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("y"), tokens.get(2));
+		
+	}
 
 }
