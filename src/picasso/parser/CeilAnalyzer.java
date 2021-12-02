@@ -19,7 +19,7 @@ public class CeilAnalyzer extends UnaryFunctionAnalyzer {
 
 		@Override
 		public ExpressionTreeNode generateExpressionTree(Stack<Token> tokens) {
-			tokens.pop(); // Need to remove the floor token
+			tokens.pop(); // Need to remove the ceil token
 			// the parameter is the next token on the stack.
 			// But, it needs to be processed
 			return new Ceil(SemanticAnalyzer.getInstance().generateExpressionTree(
