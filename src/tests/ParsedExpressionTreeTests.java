@@ -101,6 +101,16 @@ public class ParsedExpressionTreeTests {
 		assertEquals(new Sin(new Addition(new X(), new Y())), e);
 
 	}
+	
+	@Test
+	public void cosFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("cos( x )");
+		assertEquals(new Cos(new X()), e);
+
+		e = parser.makeExpression("cos( x + y )");
+		assertEquals(new Cos(new Addition(new X(), new Y())), e);
+
+	}
 
 	@Test
 	public void tanFunctionTests() {
