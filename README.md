@@ -1,6 +1,10 @@
 # Picasso
 
-## Team Members: Ben Slater, Caleb Choe, Chapin Bassi, Garret Mize, Will Xue
+## Team Members
+
+Ben Slater, Caleb Choe, Chapin Bassi, Garret Mize, Will Xue
+
+## About
 
 An application that allows the user to create expressions that
 evaluate to colors and then eventually to images.
