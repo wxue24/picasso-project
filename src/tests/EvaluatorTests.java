@@ -47,6 +47,28 @@ public class EvaluatorTests {
 		}
 	}
 
-	// TODO: More tests of evaluation
+	  @Test
+	  public void testSinEvaluation() {
+		Sin myTree = new Sin(new X());
+			
+		
+		assertEquals(new RGBColor(Math.sin(0.4), Math.sin(0.4), Math.sin(0.4)), myTree.evaluate(.4, -1));
+		assertEquals(new RGBColor(Math.sin(0.999), Math.sin(0.999), Math.sin(0.999)), myTree.evaluate(.999, -1));
+		assertEquals(new RGBColor(Math.sin(-0.7), Math.sin(-0.7), Math.sin(-0.7)), myTree.evaluate(-.7, -1));
+			
+		for (int i = -1; i <= 1; i++) {
+			assertEquals(new RGBColor(Math.sin(i), Math.sin(i), Math.sin(i)), myTree.evaluate(i, -i));
+			assertEquals(new RGBColor(Math.sin(i), Math.sin(i), Math.sin(i)), myTree.evaluate(i, i));
+			}
+			
+		double[] tests = {-.7, -.00001, .000001, .5};
+			
+		for( double testVal : tests) {
+				double sinOfTestVal = Math.sin(testVal);
+				assertEquals(new RGBColor(sinOfTestVal, sinOfTestVal, sinOfTestVal), myTree.evaluate(testVal, -1));
+				assertEquals(new RGBColor(sinOfTestVal, sinOfTestVal, sinOfTestVal), myTree.evaluate(testVal, testVal));
+			}
+			
+		}
 
 }
