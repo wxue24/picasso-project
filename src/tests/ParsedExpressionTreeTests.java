@@ -113,10 +113,7 @@ public class ParsedExpressionTreeTests {
 
 		e = parser.makeExpression("tan( x + y )");
 		assertEquals(new Tan(new Addition(new X(), new Y())), e);
-
 	}
-	
-	
 
 }
 
