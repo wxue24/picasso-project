@@ -66,6 +66,9 @@ public class Evaluater implements Command<Pixmap> {
 
 		//String test = "floor(y)";
         //String test = "ceil(y)";
+		//String test = "x - y";
+		//String test = "x * y";
+		//String test = "x / y";
         //String test = "floor(y)";
         //String test = "abs(y)";
 		// String test = "x + y";
