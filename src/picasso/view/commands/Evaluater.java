@@ -9,7 +9,7 @@ import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.RGBColor;
 import picasso.util.Command;
 import picasso.view.ErrorWindow;
-import picasso.view.Input;
+import picasso.view.InputPanel;
 
 /**
  * Evaluate an expression for each pixel in a image.
@@ -20,10 +20,10 @@ import picasso.view.Input;
 public class Evaluater implements Command<Pixmap> {
 	public static final double DOMAIN_MIN = -1;
 	public static final double DOMAIN_MAX = 1;
-	private Input input;
+	private InputPanel input;
 	private ErrorWindow errorWindow;
 
-	public Evaluater(Input input, ErrorWindow errorWindow) {
+	public Evaluater(InputPanel input, ErrorWindow errorWindow) {
 		this.input = input;
 		this.errorWindow = errorWindow;
 	}
