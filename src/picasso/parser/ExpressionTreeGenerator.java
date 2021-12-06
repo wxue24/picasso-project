@@ -64,9 +64,13 @@ public class ExpressionTreeGenerator {
 			if (!postfix.isEmpty()) {
 				throw new ParseException("Extra operands without operators or functions");
 			}
+			if (root == null) {
+				throw new ParseException("Unable to generate expression tree");
+			}
 			return root;
 		} catch (Exception e) {
-			throw new IllegalArgumentException("Unable to generate expression tree", e);
+			System.err.println(e);
+			throw new ParseException("Unable to generate expression tree");
 		}
 	}
 

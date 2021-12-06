@@ -1,9 +1,11 @@
 /**
  * 
  */
-package picasso.parser.language.expressions;
+package picasso.parser.language.expressions.BinaryOperators;
 
 import picasso.parser.language.ExpressionTreeNode;
+import picasso.parser.language.expressions.BinaryOperation;
+import picasso.parser.language.expressions.RGBColor;
 
 /**
  * @author wxue
