@@ -36,20 +36,4 @@ public class Sin extends UnaryFunction {
 		return new RGBColor(red, green, blue);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == this) {
-			return true;
-		}
-		if (!(obj instanceof Sin)) {
-			return false;
-		}
-		Sin a = (Sin) obj;
-		return param.equals(a.param);
-	}
 }
