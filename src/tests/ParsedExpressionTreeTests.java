@@ -9,6 +9,13 @@ import org.junit.jupiter.api.BeforeEach;
 import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.*;
+import picasso.parser.language.expressions.BinaryOperators.Addition;
+import picasso.parser.language.expressions.UnaryFunctions.Abs;
+import picasso.parser.language.expressions.UnaryFunctions.Ceil;
+import picasso.parser.language.expressions.UnaryFunctions.Cos;
+import picasso.parser.language.expressions.UnaryFunctions.Floor;
+import picasso.parser.language.expressions.UnaryFunctions.Sin;
+import picasso.parser.language.expressions.UnaryFunctions.Tan;
 
 /**
  * Tests of creating an expression tree from a string expression. Will have
