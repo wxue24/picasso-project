@@ -25,7 +25,7 @@ public class TokenizerTest {
 	public void setUp() throws Exception {
 		tokenizer = new Tokenizer();
 	}
-	
+
 	/**
 	 * Test that parsing an expression with a comment works
 	 */
@@ -35,7 +35,7 @@ public class TokenizerTest {
 		List<Token> tokens = tokenizer.parseTokens(expression);
 		assertEquals(new IdentifierToken("x"), tokens.get(0));
 		assertEquals(1, tokens.size());
-		
+
 		expression = "// everything is a comment";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(0, tokens.size());
@@ -88,7 +88,6 @@ public class TokenizerTest {
 		assertEquals(new LeftParenToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
-		
 
 		expression = "ceil(x)";
 		tokens = tokenizer.parseTokens(expression);
@@ -96,7 +95,6 @@ public class TokenizerTest {
 		assertEquals(new LeftParenToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
-		
 
 		expression = "abs(x)";
 		tokens = tokenizer.parseTokens(expression);
@@ -104,7 +102,34 @@ public class TokenizerTest {
 		assertEquals(new LeftParenToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
+		
+		expression = "cos(x)";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new CosToken(), tokens.get(0));
+		assertEquals(new LeftParenToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("x"), tokens.get(2));
+		assertEquals(new RightParenToken(), tokens.get(3));
 
+		expression = "tan(x)";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new TanToken(), tokens.get(0));
+		assertEquals(new LeftParenToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("x"), tokens.get(2));
+		assertEquals(new RightParenToken(), tokens.get(3));
+
+		expression = "cos(x)";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new CosToken(), tokens.get(0));
+		assertEquals(new LeftParenToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("x"), tokens.get(2));
+		assertEquals(new RightParenToken(), tokens.get(3));
+
+		expression = "sin(x)";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new SinToken(), tokens.get(0));
+		assertEquals(new LeftParenToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("x"), tokens.get(2));
+		assertEquals(new RightParenToken(), tokens.get(3));
 	}
 
 	@Test
@@ -125,7 +150,7 @@ public class TokenizerTest {
 		assertEquals(new IdentifierToken("x"), tokens.get(0));
 		assertEquals(new PlusToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("y"), tokens.get(2));
-		
+
 	}
 
 }
