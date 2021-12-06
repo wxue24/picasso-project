@@ -3,8 +3,7 @@ package picasso.parser.language.expressions;
 import picasso.parser.language.ExpressionTreeNode;
 
 public class Tan extends UnaryFunction {
-	
-	
+
 	/**
 	 * Create a tangent expression that takes as a parameter the given expression
 	 * 
@@ -30,22 +29,4 @@ public class Tan extends UnaryFunction {
 		return new RGBColor(red, green, blue);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == this) {
-			return true;
-		}
-		if (!(obj instanceof Tan)) {
-			return false;
-		}
-		Tan f = (Tan) obj;
-		return param.equals(f.param);
-	}
-
 }
-
