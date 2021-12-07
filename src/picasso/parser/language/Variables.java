@@ -50,6 +50,15 @@ public class Variables {
 	public void addVariable(String key, String val) {
 		variablesMapping.put(key, val);
 	}
+	
+	/**
+	 * Removes a variable
+	 * 
+	 * @param key - variable name
+	 */
+	public void removeVariable(String key, String val) {
+		variablesMapping.remove(key, val);
+	}
 
 	/**
 	 * Parses the new variable into its name and expression, and checks for any
