@@ -125,10 +125,9 @@ public class VariablesPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				variables.removeVariable(name, expression);
-				panel.remove(label);
-				panel.remove(removeVariableButton);
-				panel.revalidate();
-				panel.repaint();
+				variablesPanel.remove(panel);
+				variablesPanel.revalidate();
+				variablesPanel.repaint();
 				};
 		});
 		
