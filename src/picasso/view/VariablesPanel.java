@@ -21,7 +21,7 @@ import picasso.parser.language.Variables;
 /**
  * A panel containing the variables the user adds
  * 
- * @author wxue
+ * @author wxue cbassi
  *
  */
 public class VariablesPanel extends JPanel {
@@ -116,8 +116,23 @@ public class VariablesPanel extends JPanel {
 	private JPanel createEntry(String name, String expression) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout());
-		panel.add(new JLabel(name + " = " + expression));
-		panel.add(new JButton("Remove"));
+		JLabel label = new JLabel(name + " = " + expression);
+		panel.add(label);
+		
+//		Remove Button 
+		JButton removeVariableButton = new JButton("Remove");
+		removeVariableButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				variables.removeVariable(name, expression);
+				panel.remove(label);
+				panel.remove(removeVariableButton);
+				panel.revalidate();
+				panel.repaint();
+				};
+		});
+		
+		panel.add(removeVariableButton);
 		return panel;
 	}
 
