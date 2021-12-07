@@ -1,6 +1,8 @@
-package picasso.parser.language.expressions;
+package picasso.parser.language.expressions.UnaryFunctions;
 
 import picasso.parser.language.ExpressionTreeNode;
+import picasso.parser.language.expressions.RGBColor;
+import picasso.parser.language.expressions.UnaryFunction;
 
 /**
  * Represents the floor function in the Picasso language.
@@ -34,23 +36,6 @@ public class Floor extends UnaryFunction {
 		double blue = Math.floor(result.getBlue());
 
 		return new RGBColor(red, green, blue);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == this) {
-			return true;
-		}
-		if (!(obj instanceof Floor)) {
-			return false;
-		}
-		Floor f = (Floor) obj;
-		return param.equals(f.param);
 	}
 
 }

@@ -6,8 +6,8 @@ package picasso.parser;
 import java.util.Stack;
 
 import picasso.parser.language.ExpressionTreeNode;
-import picasso.parser.language.expressions.Sin;
-import picasso.parser.language.expressions.Floor;
+import picasso.parser.language.expressions.UnaryFunctions.Floor;
+import picasso.parser.language.expressions.UnaryFunctions.Sin;
 import picasso.parser.tokens.Token;
 
 /**
