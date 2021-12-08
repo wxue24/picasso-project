@@ -16,6 +16,7 @@ import picasso.parser.language.expressions.UnaryFunctions.Cos;
 import picasso.parser.language.expressions.UnaryFunctions.Floor;
 import picasso.parser.language.expressions.UnaryFunctions.Sin;
 import picasso.parser.language.expressions.UnaryFunctions.Tan;
+import picasso.parser.language.expressions.UnaryFunctions.Wrap;
 
 /**
  * Tests of creating an expression tree from a string expression. Will have
@@ -126,6 +127,15 @@ public class ParsedExpressionTreeTests {
 
 		e = parser.makeExpression("tan( x + y )");
 		assertEquals(new Tan(new Addition(new X(), new Y())), e);
+	}
+	
+	@Test
+	public void wrapFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("wrap( x )");
+		assertEquals(new Wrap(new X()), e);
+		
+		e = parser.makeExpression("wrap ( x + y )");
+		assertEquals(new Wrap(new Addition(new X(), new Y())), e);
 	}
 
 }
