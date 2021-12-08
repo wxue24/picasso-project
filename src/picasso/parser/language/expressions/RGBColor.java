@@ -62,13 +62,19 @@ public class RGBColor extends ExpressionTreeNode {
 		myBlue = clamp(myBlue);
 	}
 
+	public void wrap() {
+		myRed = wrap(myRed);
+		myGreen = wrap(myGreen);
+		myBlue = wrap(myBlue);
+	}
+
 	public Color toJavaColor() {
 		clamp();
 		return new Color(toInt(myRed), toInt(myGreen), toInt(myBlue));
 	}
 
 	public boolean equals(Object o) {
-		if( o == this) {
+		if (o == this) {
 			return true;
 		}
 		if (o instanceof RGBColor) {
@@ -108,6 +114,11 @@ public class RGBColor extends ExpressionTreeNode {
 
 	protected double clamp(double value) {
 		return Math.max(COLOR_MIN, Math.min(COLOR_MAX, value));
+	}
+
+	protected double wrap(double value) {
+		return Math.min(Math.max(COLOR_MIN, value), COLOR_MAX);
+
 	}
 
 	@Override
