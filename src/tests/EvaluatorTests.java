@@ -3,14 +3,15 @@
  */
 package tests;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
-import picasso.parser.language.expressions.*;
+import picasso.parser.language.expressions.RGBColor;
+import picasso.parser.language.expressions.X;
 import picasso.parser.language.expressions.UnaryFunctions.Abs;
 import picasso.parser.language.expressions.UnaryFunctions.Ceil;
 import picasso.parser.language.expressions.UnaryFunctions.Cos;
@@ -69,32 +70,31 @@ public class EvaluatorTests {
 		}
 
 	}
-	
+
 	@Test
 	public void testCeilEvaluation() {
 		Ceil myTree = new Ceil(new X());
-		
+
 		// some straightforward tests
 		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(.4, -1));
 		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(.999, -1));
 		assertEquals(new RGBColor(0, 0, 0), myTree.evaluate(-.7, -1));
-		
+
 		// test the ints; remember that y's value doesn't matter
 		for (int i = -1; i <= 1; i++) {
 			assertEquals(new RGBColor(i, i, i), myTree.evaluate(i, -i));
 			assertEquals(new RGBColor(i, i, i), myTree.evaluate(i, i));
 		}
-		
-		double[] tests = {-.7, -.00001, .000001, .5};
-		
-		for( double testVal : tests) {
+
+		double[] tests = { -.7, -.00001, .000001, .5 };
+
+		for (double testVal : tests) {
 			double ceilOfTestVal = Math.ceil(testVal);
 			assertEquals(new RGBColor(ceilOfTestVal, ceilOfTestVal, ceilOfTestVal), myTree.evaluate(testVal, -1));
 			assertEquals(new RGBColor(ceilOfTestVal, ceilOfTestVal, ceilOfTestVal), myTree.evaluate(testVal, testVal));
 		}
-		
+
 	}
-	
 
 	@Test
 	public void testXEvaluation() {
@@ -103,26 +103,26 @@ public class EvaluatorTests {
 			assertEquals(new RGBColor(i, i, i), x.evaluate(i, i));
 		}
 	}
-	
+
 	@Test
 	public void testCosEvaluation() {
 		Cos myTree = new Cos(new X());
-		
+
 		assertEquals(new RGBColor(Math.cos(.4), Math.cos(.4), Math.cos(.4)), myTree.evaluate(.4, -1));
 		assertEquals(new RGBColor(Math.cos(.999), Math.cos(.999), Math.cos(.999)), myTree.evaluate(.999, -1));
 		assertEquals(new RGBColor(Math.cos(-.7), Math.cos(-.7), Math.cos(-.7)), myTree.evaluate(-.7, -1));
-		
+
 		for (int i = -1; i <= 1; i++) {
 			assertEquals(new RGBColor(Math.cos(i), Math.cos(i), Math.cos(i)), myTree.evaluate(i, -i));
 			assertEquals(new RGBColor(Math.cos(i), Math.cos(i), Math.cos(i)), myTree.evaluate(i, i));
 		}
-		
-		double[] tests = {-.7, -.00001, .000001, .5};
-		
-		for( double testVal : tests) {
+
+		double[] tests = { -.7, -.00001, .000001, .5 };
+
+		for (double testVal : tests) {
 			double cosOfTestVal = Math.cos(testVal);
-			assertEquals( new RGBColor(cosOfTestVal, cosOfTestVal, cosOfTestVal), myTree.evaluate(testVal, -1));
-			assertEquals( new RGBColor(cosOfTestVal, cosOfTestVal, cosOfTestVal), myTree.evaluate(testVal, testVal));
+			assertEquals(new RGBColor(cosOfTestVal, cosOfTestVal, cosOfTestVal), myTree.evaluate(testVal, -1));
+			assertEquals(new RGBColor(cosOfTestVal, cosOfTestVal, cosOfTestVal), myTree.evaluate(testVal, testVal));
 		}
 	}
 
