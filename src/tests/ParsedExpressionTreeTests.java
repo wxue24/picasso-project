@@ -1,14 +1,16 @@
 package tests;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
-import picasso.parser.language.expressions.*;
+import picasso.parser.language.Variables;
+import picasso.parser.language.expressions.RGBColor;
+import picasso.parser.language.expressions.X;
+import picasso.parser.language.expressions.Y;
 import picasso.parser.language.expressions.BinaryOperators.Addition;
 import picasso.parser.language.expressions.UnaryFunctions.Abs;
 import picasso.parser.language.expressions.UnaryFunctions.Ceil;
@@ -31,6 +33,7 @@ public class ParsedExpressionTreeTests {
 	@BeforeEach
 	public void setUp() throws Exception {
 		parser = new ExpressionTreeGenerator();
+		Variables.getInstance().removeAll();
 	}
 
 	@Test
@@ -108,7 +111,7 @@ public class ParsedExpressionTreeTests {
 		assertEquals(new Sin(new Addition(new X(), new Y())), e);
 
 	}
-	
+
 	@Test
 	public void cosFunctionTests() {
 		ExpressionTreeNode e = parser.makeExpression("cos( x )");
@@ -126,6 +129,14 @@ public class ParsedExpressionTreeTests {
 
 		e = parser.makeExpression("tan( x + y )");
 		assertEquals(new Tan(new Addition(new X(), new Y())), e);
+	}
+
+	@Test
+	public void variablesExpressionTests() {
+		Variables.getInstance().addVariable("c = floor(x)");
+		ExpressionTreeNode e = parser.makeExpression("c + [1,0,0]");
+		assertEquals(new Addition(new Floor(new X()), new RGBColor(1, 0, 0)), e);
+
 	}
 
 }

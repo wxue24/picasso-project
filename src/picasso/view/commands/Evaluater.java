@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import picasso.model.Pixmap;
 import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
-import picasso.parser.language.expressions.RGBColor;
 import picasso.util.Command;
 import picasso.view.ErrorWindow;
 import picasso.view.InputPanel;
@@ -21,16 +20,15 @@ public class Evaluater implements Command<Pixmap> {
 	public static final double DOMAIN_MIN = -1;
 	public static final double DOMAIN_MAX = 1;
 	private InputPanel input;
-	private ErrorWindow errorWindow;
 
-	public Evaluater(InputPanel input, ErrorWindow errorWindow) {
+	public Evaluater(InputPanel input) {
 		this.input = input;
-		this.errorWindow = errorWindow;
 	}
 
 	/**
 	 * Evaluate an expression for each point in the image.
 	 */
+	@Override
 	public void execute(Pixmap target) {
 		// create the expression to evaluate just once
 		ExpressionTreeNode expr = createExpression();
@@ -63,34 +61,37 @@ public class Evaluater implements Command<Pixmap> {
 		// generate expression trees from strings, or you can create expression
 		// objects directly (as in the commented statement below).
 
-
-		//String test = "floor(y)";
+		// String test = "floor(y)";
 //		String test = "ceil(y)";
-                //String test = "floor(y)";
+		// String test = "floor(y)";
 //		String test = "abs(y)";
 		// String test = "x + y";
-		String test = input.getText();
-
-
-		ExpressionTreeGenerator expTreeGen = new ExpressionTreeGenerator();
 		try {
+			String test = input.getText();
+
+			ExpressionTreeGenerator expTreeGen = new ExpressionTreeGenerator();
 
 			ExpressionTreeNode node = expTreeGen.makeExpression(test);
-			if(node != null) return node;
-			else return handleCreateExpressionError();
-			// return new Multiply( new X(), new Y() );
+			if (node != null)
+				return node;
+			else
+				return handleCreateExpressionError();
 		} catch (Exception e) {
-			return handleCreateExpressionError();
+			ErrorWindow.getInstance().showError(e.getMessage());
+			return null;
 		}
+		// return new Multiply( new X(), new Y() );
+
 	}
-	
+
 	/**
 	 * Shows any errors when generating the expression tree in an error window
+	 * 
 	 * @return Expression tree node for black canvas
 	 */
 	private ExpressionTreeNode handleCreateExpressionError() {
 		ExpressionTreeGenerator expTreeGen = new ExpressionTreeGenerator();
-		errorWindow.showError("Unable to create image from input");
+		ErrorWindow.getInstance().showError("Unable to create image from input");
 		// Set canvas to black
 		return expTreeGen.makeExpression("-1");
 	}

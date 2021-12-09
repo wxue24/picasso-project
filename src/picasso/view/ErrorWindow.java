@@ -13,13 +13,31 @@ import javax.swing.JOptionPane;
  *
  */
 public class ErrorWindow extends JOptionPane {
-	private JFrame frame;
 	private String errorMessage;
+	private static ErrorWindow ourInstance;
+	private JFrame frame;
 
-	public ErrorWindow() {
+	/**
+	 * Make sure there is only one instance
+	 * 
+	 * @return the ErrorWindow instance
+	 */
+	public static ErrorWindow getInstance() {
+		if (ourInstance == null) {
+			ourInstance = new ErrorWindow();
+		}
+		return ourInstance;
+	}
+
+	private ErrorWindow() {
 		frame = new JFrame();
 	}
 
+	/**
+	 * Show the error
+	 * 
+	 * @param e - error message
+	 */
 	public void showError(String e) {
 		showMessageDialog(frame, e, "Something went wrong", JOptionPane.ERROR_MESSAGE);
 	}

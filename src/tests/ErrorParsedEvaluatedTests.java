@@ -1,13 +1,12 @@
 package tests;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import picasso.parser.ParseException;
 import picasso.parser.ExpressionTreeGenerator;
+import picasso.parser.ParseException;
 
 /**
  * Tests of incorrect parsing of strings by the ExpressionTreeGenerator
@@ -72,7 +71,7 @@ public class ErrorParsedEvaluatedTests {
 			parser.makeExpression("7 * 3 )");
 		});
 	}
-	
+
 	@Test
 	public void errorMissingFunctionParenTest() {
 		assertThrows(ParseException.class, () -> {
