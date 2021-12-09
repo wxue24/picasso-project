@@ -23,6 +23,7 @@ import picasso.parser.tokens.functions.CosToken;
 import picasso.parser.tokens.functions.FloorToken;
 import picasso.parser.tokens.functions.SinToken;
 import picasso.parser.tokens.functions.TanToken;
+import picasso.parser.tokens.functions.WrapToken;
 import picasso.parser.tokens.operations.PlusToken;
 
 public class TokenizerTest {
