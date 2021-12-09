@@ -40,7 +40,7 @@ public class ExpressionTreeGenerator {
 	 * @return ExpressionTreeNode representing the root node of the given infix
 	 *         formula
 	 */
-	public ExpressionTreeNode makeExpression(String infix) throws IllegalArgumentException {
+	public ExpressionTreeNode makeExpression(String infix) throws ParseException {
 
 		Stack<Token> postfix = infixToPostfix(infix);
 

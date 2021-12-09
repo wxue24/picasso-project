@@ -66,15 +66,20 @@ public class Evaluater implements Command<Pixmap> {
 		// String test = "floor(y)";
 //		String test = "abs(y)";
 		// String test = "x + y";
-		String test = input.getText();
+		try {
+			String test = input.getText();
 
-		ExpressionTreeGenerator expTreeGen = new ExpressionTreeGenerator();
+			ExpressionTreeGenerator expTreeGen = new ExpressionTreeGenerator();
 
-		ExpressionTreeNode node = expTreeGen.makeExpression(test);
-		if (node != null)
-			return node;
-		else
-			return handleCreateExpressionError();
+			ExpressionTreeNode node = expTreeGen.makeExpression(test);
+			if (node != null)
+				return node;
+			else
+				return handleCreateExpressionError();
+		} catch (Exception e) {
+			ErrorWindow.getInstance().showError(e.getMessage());
+			return null;
+		}
 		// return new Multiply( new X(), new Y() );
 
 	}
