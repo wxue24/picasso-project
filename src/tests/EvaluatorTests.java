@@ -124,6 +124,7 @@ public class EvaluatorTests {
 			assertEquals(new RGBColor(cosOfTestVal, cosOfTestVal, cosOfTestVal), myTree.evaluate(testVal, testVal));
 		}
 	}
+
 	@Test
 	public void testFloorEvaluation() {
 		Floor myTree = new Floor(new X());
@@ -144,7 +145,8 @@ public class EvaluatorTests {
 		for (double testVal : tests) {
 			double floorOfTestVal = Math.floor(testVal);
 			assertEquals(new RGBColor(floorOfTestVal, floorOfTestVal, floorOfTestVal), myTree.evaluate(testVal, -1));
-			assertEquals(new RGBColor(floorOfTestVal, floorOfTestVal, floorOfTestVal),myTree.evaluate(testVal, testVal));
+			assertEquals(new RGBColor(floorOfTestVal, floorOfTestVal, floorOfTestVal),
+					myTree.evaluate(testVal, testVal));
 		}
 
 	}
@@ -195,6 +197,9 @@ public class EvaluatorTests {
 			assertEquals(new RGBColor(sinOfTestVal, sinOfTestVal, sinOfTestVal), myTree.evaluate(testVal, -1));
 			assertEquals(new RGBColor(sinOfTestVal, sinOfTestVal, sinOfTestVal), myTree.evaluate(testVal, testVal));
 		}
+		
+	
+	
 
 	}
 

@@ -1,6 +1,7 @@
 package picasso.view.commands;
 
 import java.awt.Color;
+
 import java.awt.Dimension;
 
 import picasso.model.Pixmap;
@@ -72,6 +73,7 @@ public class Evaluater implements Command<Pixmap> {
         //String test = "floor(y)";
         //String test = "abs(y)";
 		// String test = "x + y";
+		// String test = "wrap(y)";
 		String test = input.getText();
 
 

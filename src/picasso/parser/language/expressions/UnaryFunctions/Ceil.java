@@ -1,6 +1,7 @@
 package picasso.parser.language.expressions.UnaryFunctions;
 
 import picasso.parser.language.ExpressionTreeNode;
+
 import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.language.expressions.UnaryFunction;
 
