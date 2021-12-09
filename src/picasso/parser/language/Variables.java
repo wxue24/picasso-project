@@ -4,7 +4,11 @@
 package picasso.parser.language;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import picasso.parser.Tokenizer;
+import picasso.parser.tokens.Token;
 
 /**
  * Represents the variables
@@ -14,7 +18,8 @@ import java.util.Map;
  */
 public class Variables {
 
-	private Map<String, String> variablesMapping;
+	private Map<String, List<Token>> variablesMapping;
+	private Map<String, String> variablesMappingString;
 	private static Variables ourInstance;
 
 	/**
@@ -31,29 +36,71 @@ public class Variables {
 
 	private Variables() {
 		variablesMapping = new HashMap<>();
+		variablesMappingString = new HashMap<>();
 	}
 
 	/**
 	 * 
-	 * @return the variables in a map
+	 * @return the variables in a map of String
 	 */
 	public Map<String, String> getVariablesMapping() {
-		return variablesMapping;
+		return variablesMappingString;
 	}
 
 	/**
-	 * Adds a new variable
+	 * Adds variable
+	 * 
+	 * @param input contains variable name on right hand side and expression on left
+	 *              hand side, separated by '=' in between
+	 * @return String array with index at 0 as the key, and index at 1 as the
+	 *         expression
+	 */
+	public String[] addVariable(String input) {
+		// parses input
+		String[] v = parse(input);
+
+		// tokenizes expression
+		Tokenizer tokenizer = new Tokenizer();
+		List<Token> exp = tokenizer.parseTokens(v[1]);
+
+		// adds to mappings
+		variablesMapping.put(v[0], exp);
+		variablesMappingString.put(v[0], v[1]);
+		return v;
+	}
+
+	/**
+	 * Gets expression of a variable
+	 * 
+	 * @param key
+	 * @return expression as a stack of tokens
+	 */
+	public List<Token> getVariable(String key) {
+		return variablesMapping.get(key);
+	}
+
+	/**
+	 * Removes a variable
 	 * 
 	 * @param key - variable name
-	 * @param val - expression
 	 */
-	public void addVariable(String key, String val) {
-		variablesMapping.put(key, val);
+	public void removeVariable(String key) {
+		variablesMapping.remove(key);
+		variablesMappingString.remove(key);
+	}
+
+	/**
+	 * Removes all variables
+	 */
+	public void removeAll() {
+		variablesMapping = new HashMap<>();
+		variablesMappingString = new HashMap<>();
 	}
 
 	/**
 	 * Parses the new variable into its name and expression, and checks for any
-	 * errors
+	 * errors. Valid variable names should be letters or words that aren't x or y or
+	 * function names
 	 * 
 	 * @param input - new variable that user adds
 	 * @return array of String with first value being variable name, and second

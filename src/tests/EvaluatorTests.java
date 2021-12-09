@@ -3,14 +3,15 @@
  */
 package tests;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
-import picasso.parser.language.expressions.*;
+import picasso.parser.language.expressions.RGBColor;
+import picasso.parser.language.expressions.X;
 import picasso.parser.language.expressions.UnaryFunctions.Abs;
 import picasso.parser.language.expressions.UnaryFunctions.Ceil;
 import picasso.parser.language.expressions.UnaryFunctions.Cos;

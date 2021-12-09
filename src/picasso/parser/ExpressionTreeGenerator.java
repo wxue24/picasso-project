@@ -2,11 +2,9 @@ package picasso.parser;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Stack;
 
 import picasso.parser.language.ExpressionTreeNode;
-import picasso.parser.language.Variables;
 import picasso.parser.tokens.CharTokenFactory;
 import picasso.parser.tokens.ColorToken;
 import picasso.parser.tokens.IdentifierToken;
@@ -42,36 +40,28 @@ public class ExpressionTreeGenerator {
 	 * @return ExpressionTreeNode representing the root node of the given infix
 	 *         formula
 	 */
-	public ExpressionTreeNode makeExpression(String infix) throws IllegalArgumentException {
-		try {
-			// Replace variables with their corresponding expressions
-			for (Entry<String, String> e : Variables.getInstance().getVariablesMapping().entrySet()) {
-				infix = infix.replaceAll(e.getKey(), e.getValue());
-			}
+	public ExpressionTreeNode makeExpression(String infix) throws ParseException {
 
-			Stack<Token> postfix = infixToPostfix(infix);
+		Stack<Token> postfix = infixToPostfix(infix);
 
-			if (postfix.isEmpty()) {
-				return null;
-			}
+		if (postfix.isEmpty()) {
+			return null;
+		}
 
-			// System.out.println("Process postfix expression");
-			SemanticAnalyzer semAnalyzer = SemanticAnalyzer.getInstance();
+		// System.out.println("Process postfix expression");
+		SemanticAnalyzer semAnalyzer = SemanticAnalyzer.getInstance();
 
-			ExpressionTreeNode root = semAnalyzer.generateExpressionTree(postfix);
+		ExpressionTreeNode root = semAnalyzer.generateExpressionTree(postfix);
 
-			// Is this the best place to put this check?
-			if (!postfix.isEmpty()) {
-				throw new ParseException("Extra operands without operators or functions");
-			}
-			if (root == null) {
-				throw new ParseException("Unable to generate expression tree");
-			}
-			return root;
-		} catch (Exception e) {
-			System.err.println(e);
+		// Is this the best place to put this check?
+		if (!postfix.isEmpty()) {
+			throw new ParseException("Extra operands without operators or functions");
+		}
+		if (root == null) {
 			throw new ParseException("Unable to generate expression tree");
 		}
+		return root;
+
 	}
 
 	/**
