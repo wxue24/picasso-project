@@ -23,9 +23,6 @@ public class Frame extends JFrame {
 	public Frame(Dimension size) {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		// create error window
-		ErrorWindow errorWindow = new ErrorWindow();
-
 		// create GUI components
 		Canvas canvas = new Canvas(this);
 		canvas.setSize(size);
@@ -34,12 +31,12 @@ public class Frame extends JFrame {
 		InputPanel input = new InputPanel();
 
 		// create variables panel
-		VariablesPanel variablesPanel = new VariablesPanel(errorWindow);
+		VariablesPanel variablesPanel = new VariablesPanel();
 
 		// add commands to test here
 		ButtonPanel commands = new ButtonPanel(canvas);
 		commands.add("Open", new Reader());
-		commands.add("Evaluate", new ThreadedCommand<Pixmap>(canvas, new Evaluater(input, errorWindow)));
+		commands.add("Evaluate", new ThreadedCommand<Pixmap>(canvas, new Evaluater(input)));
 		commands.add("Save", new Writer());
 
 		// add panel to hold commands, input, and canvas

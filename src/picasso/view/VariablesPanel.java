@@ -27,12 +27,10 @@ import picasso.parser.language.Variables;
 public class VariablesPanel extends JPanel {
 
 	private JPanel variablesPanel;
-	private ErrorWindow errorWindow;
 	private Variables variables;
 
-	public VariablesPanel(ErrorWindow ew) {
+	public VariablesPanel() {
 		variables = Variables.getInstance();
-		errorWindow = ew;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(new JLabel("Variables"));
 		add(addVariablePanel());
@@ -60,7 +58,7 @@ public class VariablesPanel extends JPanel {
 					variablesPanel.revalidate();
 
 				} catch (IllegalArgumentException exception) {
-					errorWindow.showError(exception.getMessage());
+					ErrorWindow.getInstance().showError(exception.getMessage());
 				}
 
 			}
