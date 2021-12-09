@@ -198,6 +198,9 @@ public class EvaluatorTests {
 			assertEquals(new RGBColor(sinOfTestVal, sinOfTestVal, sinOfTestVal), myTree.evaluate(testVal, -1));
 			assertEquals(new RGBColor(sinOfTestVal, sinOfTestVal, sinOfTestVal), myTree.evaluate(testVal, testVal));
 		}
+		
+	
+	
 
 	}
 
