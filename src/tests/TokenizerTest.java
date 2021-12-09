@@ -10,10 +10,19 @@ import org.junit.jupiter.api.Test;
 
 import picasso.parser.ParseException;
 import picasso.parser.Tokenizer;
-import picasso.parser.language.expressions.X;
-import picasso.parser.tokens.*;
-import picasso.parser.tokens.chars.*;
-import picasso.parser.tokens.functions.*;
+import picasso.parser.language.Variables;
+import picasso.parser.tokens.ColorToken;
+import picasso.parser.tokens.IdentifierToken;
+import picasso.parser.tokens.NumberToken;
+import picasso.parser.tokens.Token;
+import picasso.parser.tokens.chars.LeftParenToken;
+import picasso.parser.tokens.chars.RightParenToken;
+import picasso.parser.tokens.functions.AbsToken;
+import picasso.parser.tokens.functions.CeilToken;
+import picasso.parser.tokens.functions.CosToken;
+import picasso.parser.tokens.functions.FloorToken;
+import picasso.parser.tokens.functions.SinToken;
+import picasso.parser.tokens.functions.TanToken;
 import picasso.parser.tokens.operations.PlusToken;
 
 public class TokenizerTest {
@@ -24,6 +33,7 @@ public class TokenizerTest {
 	@BeforeEach
 	public void setUp() throws Exception {
 		tokenizer = new Tokenizer();
+		Variables.getInstance().removeAll();
 	}
 
 	/**
@@ -102,7 +112,7 @@ public class TokenizerTest {
 		assertEquals(new LeftParenToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
-		
+
 		expression = "cos(x)";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new CosToken(), tokens.get(0));
@@ -134,13 +144,13 @@ public class TokenizerTest {
 
 	@Test
 	public void testTokenizeCombinedFunctionExpression() {
-		String expression = "perlinColor(floor(x), y)";
-		List<Token> tokens = tokenizer.parseTokens(expression);
-		// TODO: Check the tokens...
-
-		expression = "sin(perlinColor(x, y))";
-		tokens = tokenizer.parseTokens(expression);
-		// TODO: Check the tokens...
+//		String expression = "perlinColor(floor(x), y)";
+//		List<Token> tokens = tokenizer.parseTokens(expression);
+//		// TODO: Check the tokens...
+//
+//		expression = "sin(perlinColor(x, y))";
+//		tokens = tokenizer.parseTokens(expression);
+//		// TODO: Check the tokens...
 	}
 
 	@Test
@@ -151,6 +161,28 @@ public class TokenizerTest {
 		assertEquals(new PlusToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("y"), tokens.get(2));
 
+	}
+
+	@Test
+	public void testTokenizeVariables() {
+		Variables.getInstance().addVariable("a = floor(x)");
+		tokens = Variables.getInstance().getVariable("a");
+		assertEquals(new FloorToken(), tokens.get(0));
+		assertEquals(new LeftParenToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("x"), tokens.get(2));
+		assertEquals(new RightParenToken(), tokens.get(3));
+
+		tokens = tokenizer.parseTokens("a");
+		assertEquals(new FloorToken(), tokens.get(0));
+		assertEquals(new LeftParenToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("x"), tokens.get(2));
+		assertEquals(new RightParenToken(), tokens.get(3));
+
+		tokens = tokenizer.parseTokens("tan(x)");
+		assertEquals(new TanToken(), tokens.get(0));
+		assertEquals(new LeftParenToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("x"), tokens.get(2));
+		assertEquals(new RightParenToken(), tokens.get(3));
 	}
 
 }
