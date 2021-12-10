@@ -24,6 +24,7 @@ import picasso.parser.language.expressions.UnaryFunctions.Wrap;
  * Tests of the evaluation of x
  * 
  * @author Sara Sprenkle
+ * @author bslater
  * 
  */
 public class EvaluatorTests {

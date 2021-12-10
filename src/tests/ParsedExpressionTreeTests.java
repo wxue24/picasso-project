@@ -13,6 +13,8 @@ import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.language.expressions.X;
 import picasso.parser.language.expressions.Y;
 import picasso.parser.language.expressions.BinaryOperators.Addition;
+import picasso.parser.language.expressions.BinaryOperators.Subtraction;
+import picasso.parser.language.expressions.BinaryOperators.Division;
 import picasso.parser.language.expressions.UnaryFunctions.Abs;
 import picasso.parser.language.expressions.UnaryFunctions.Ceil;
 import picasso.parser.language.expressions.UnaryFunctions.Cos;
@@ -25,7 +27,7 @@ import picasso.parser.language.expressions.UnaryFunctions.Wrap;
  * Tests of creating an expression tree from a string expression. Will have
  * compiler errors until some code is created.
  * 
- * @author Sara Sprenkle
+ * @author Sara Sprenkle, bslater
  * 
  */
 public class ParsedExpressionTreeTests {
@@ -156,4 +158,37 @@ public class ParsedExpressionTreeTests {
 		assertEquals(new Imagewrap("tanx.jpg", new Addition(new X(), new X()), new Y()), e);
 	}
 
+
+
+	@Test
+	public void subtractionExpressionTests() {
+		ExpressionTreeNode e = parser.makeExpression("x - y");
+		assertEquals(new Subtraction(new X(), new Y()), e);
+		
+		e = parser.makeExpression("x-y");
+		assertEquals(new Subtraction(new X(), new Y()), e);
+	
+		e = parser.makeExpression("[1,.3,-1] - y");
+		assertEquals(new Subtraction(new RGBColor(1, .3, -1), new Y()), e);
+	
+		e = parser.makeExpression("x - y - [ -.51, 0, 1]");
+		assertEquals(new Subtraction(new Subtraction(new X(), new Y()), new RGBColor(-.51, 0, 1)), e);
+	}
+	
+
+	@Test
+	public void divisionExpressionTests() {
+		ExpressionTreeNode e = parser.makeExpression("x / y");
+		assertEquals(new Division(new X(), new Y()), e);
+		
+		e = parser.makeExpression("x/y");
+		assertEquals(new Division(new X(), new Y()), e);
+	
+		e = parser.makeExpression("[1,.3,-1] / y");
+		assertEquals(new Division(new RGBColor(1, .3, -1), new Y()), e);
+	
+		e = parser.makeExpression("x / y / [ -.51, 0, 1]");
+		assertEquals(new Division(new Subtraction(new X(), new Y()), new RGBColor(-.51, 0, 1)), e);
+	}
+	
 }
