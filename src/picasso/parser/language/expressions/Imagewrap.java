@@ -1,18 +1,21 @@
 package picasso.parser.language.expressions;
 
-import java.awt.image.BufferedImage;
+import java.awt.Color;
 import java.util.Arrays;
 
 import picasso.model.Pixmap;
 import picasso.parser.language.ExpressionTreeNode;
+import picasso.parser.language.expressions.UnaryFunctions.Wrap;
 
 /**
- * @author cbassi calebchoe
+ * @author calebchoe
+ * @author cbassi
  *
  */
 public class Imagewrap extends MultiArgumentFunction {
 
-	ExpressionTreeNode xcoordexp, ycoordexp;
+	private ExpressionTreeNode xcoordexp, ycoordexp;
+	private Pixmap image;
 
 	/**
 	 * Create an ImageWrap expression that takes a list of parameters.
@@ -20,34 +23,50 @@ public class Imagewrap extends MultiArgumentFunction {
 	 * @param param the expression to ImageWrap
 	 */
 
-	BufferedImage image;
-	String name;
-	Pixmap imagetemp;
-
-	public Imagewrap(String name, ExpressionTreeNode xcoordexp, ExpressionTreeNode ycoordexp) {
+	public Imagewrap(String path, ExpressionTreeNode xcoordexp, ExpressionTreeNode ycoordexp) {
 		super(Arrays.asList(xcoordexp, ycoordexp));
+		this.xcoordexp = xcoordexp;
+		this.ycoordexp = ycoordexp;
+		image = new Pixmap(path);
 
-		imagetemp = new Pixmap(name);
-		this.image = Pixmap.getImage(imagetemp);
 	}
 
 	@Override
 	public RGBColor evaluate(double x, double y) {
-// 		Find new x and y variables 
-		RGBColor xCopy = xcoordexp.evaluate(x, y);
-		RGBColor yCopy = ycoordexp.evaluate(x, y);
+		// Evaluate expression
+		double xcoord = xcoordexp.evaluate(x, y).getBlue();
+		double ycoord = ycoordexp.evaluate(x, y).getBlue();
 
-		double xCopyDouble = xCopy.getRed();
-		double yCopyDouble = yCopy.getRed();
+		// Wrap coordinates
+		xcoord = Wrap.wrapvalue(xcoord);
+		ycoord = Wrap.wrapvalue(ycoord);
 
-		double xScale = domainToImageScale(xCopyDouble, this.image.getWidth());
-		double yScale = domainToImageScale(yCopyDouble, this.image.getWidth());
+		// Get color from original image at these coordinates
+		int[] scaledCoords = scaleCoords(xcoord, ycoord);
+		Color originalColor = image.getColor(scaledCoords[0], scaledCoords[1]);
+		return new RGBColor(originalColor);
 
-		return evaluate(xScale, yScale);
 	}
 
-	protected double domainToImageScale(double value, int bounds) {
-		return (int) (-1 * (((1 - value) / 2) - 1) * bounds);
+	/**
+	 * Returns coordinates of image corresponding to Pixmap coordinates
+	 * 
+	 * @param x - xcoord in range [-1,1]
+	 * @param y - ycoord in range [-1,1]
+	 * @return scaled to pixmap coordinates as an integer array, with index at 0 as
+	 *         the x-coord and 1 as the y-coord
+	 */
+	private int[] scaleCoords(double x, double y) {
+		// Set range to [0, 2]
+		x = x + 1;
+		y = y + 1;
+
+		// Get ratio
+		double xratio = x / 2;
+		double yratio = y / 2;
+
+		// Get scaled up coordinates
+		return new int[] { (int) (xratio * image.getSize().width), (int) (yratio * image.getSize().height) };
 	}
 
 }
