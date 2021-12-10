@@ -32,5 +32,3 @@ public class ImagewrapAnalyzer implements SemanticAnalyzerInterface {
 
 		return new Imagewrap(name, leftExp, rightExp);
 	}
-
-}
