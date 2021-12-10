@@ -27,6 +27,8 @@ import picasso.parser.tokens.functions.ImagewrapToken;
 import picasso.parser.tokens.functions.SinToken;
 import picasso.parser.tokens.functions.TanToken;
 import picasso.parser.tokens.functions.WrapToken;
+import picasso.parser.tokens.operations.DivideToken;
+import picasso.parser.tokens.operations.MinusToken;
 import picasso.parser.tokens.operations.PlusToken;
 
 public class TokenizerTest {
@@ -170,6 +172,16 @@ public class TokenizerTest {
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new IdentifierToken("x"), tokens.get(0));
 		assertEquals(new PlusToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("y"), tokens.get(2));
+		String expression2 = "x - y";
+		tokens = tokenizer.parseTokens(expression2);
+		assertEquals(new IdentifierToken("x"), tokens.get(0));
+		assertEquals(new MinusToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("y"), tokens.get(2));
+		String expression3 = "x / y";
+		tokens = tokenizer.parseTokens(expression3);
+		assertEquals(new IdentifierToken("x"), tokens.get(0));
+		assertEquals(new DivideToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("y"), tokens.get(2));
 
 	}
