@@ -10,8 +10,10 @@ import org.junit.jupiter.api.Test;
 
 import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
+import picasso.parser.language.expressions.Imagewrap;
 import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.language.expressions.X;
+import picasso.parser.language.expressions.Y;
 import picasso.parser.language.expressions.UnaryFunctions.Abs;
 import picasso.parser.language.expressions.UnaryFunctions.Ceil;
 import picasso.parser.language.expressions.UnaryFunctions.Cos;
@@ -205,22 +207,32 @@ public class EvaluatorTests {
 	@Test
 	public void testWrapEvaluation() {
 		Wrap myTree = new Wrap(new X());
-		
+
 		assertEquals(new RGBColor(-.5, -.5, -.5), myTree.evaluate(1.5, -1));
 		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(3.0, -1));
 		assertEquals(new RGBColor(.5, .5, .5), myTree.evaluate(-1.5, -1));
-		
+
 		for (int i = -1; i <= 1; i++) {
 			assertEquals(new RGBColor(i, i, i), myTree.evaluate(i, -i));
 			assertEquals(new RGBColor(i, i, i), myTree.evaluate(i, i));
 		}
 		double[] tests = { -.7, -.00001, .000001, .5 };
-		
+
 		for (double testVal : tests) {
 			double wrapOfTestVal = testVal;
 			assertEquals(new RGBColor(wrapOfTestVal, wrapOfTestVal, wrapOfTestVal), myTree.evaluate(testVal, -1));
 			assertEquals(new RGBColor(wrapOfTestVal, wrapOfTestVal, wrapOfTestVal), myTree.evaluate(testVal, testVal));
 		}
 
+	}
+
+	@Test
+	public void testImageWrapEvaluation() {
+		Imagewrap myTree = new Imagewrap("tanx.jpg", new X(), new Y());
+		assertEquals(new RGBColor(0.41960784313725497, 0.41960784313725497, 0.41960784313725497),
+				myTree.evaluate(.4, -1));
+		assertEquals(new RGBColor(1.0, 1.0, 1.0), myTree.evaluate(4.999, -1));
+		assertEquals(new RGBColor(-0.8509803921568627, -0.8509803921568627, -0.8509803921568627),
+				myTree.evaluate(-4.7, -1));
 	}
 }
