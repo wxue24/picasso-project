@@ -19,9 +19,10 @@ evaluate to colors and then eventually to images.
     * Sin
     * Floor
     * Ceil
+    * Wrap
     
 * Multi-Argument Functions
-    * Wrap
+    * Imagewrap
     
 * Binary Operators
     * +
