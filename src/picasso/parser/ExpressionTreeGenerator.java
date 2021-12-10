@@ -9,6 +9,7 @@ import picasso.parser.tokens.CharTokenFactory;
 import picasso.parser.tokens.ColorToken;
 import picasso.parser.tokens.IdentifierToken;
 import picasso.parser.tokens.NumberToken;
+import picasso.parser.tokens.StringToken;
 import picasso.parser.tokens.Token;
 import picasso.parser.tokens.chars.CommaToken;
 import picasso.parser.tokens.chars.LeftParenToken;
@@ -97,6 +98,8 @@ public class ExpressionTreeGenerator {
 			} else if (token instanceof ColorToken) {
 				postfixResult.push(token);
 			} else if (token instanceof IdentifierToken) {
+				postfixResult.push(token);
+			} else if (token instanceof StringToken) {
 				postfixResult.push(token);
 			} else if (token instanceof FunctionToken) {
 				operators.push(token);

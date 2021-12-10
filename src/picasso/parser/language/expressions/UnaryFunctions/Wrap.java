@@ -1,8 +1,6 @@
 package picasso.parser.language.expressions.UnaryFunctions;
 
 import picasso.parser.language.ExpressionTreeNode;
-
-
 import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.language.expressions.UnaryFunction;
 
@@ -24,40 +22,29 @@ public class Wrap extends UnaryFunction {
 	public Wrap(ExpressionTreeNode param) {
 		super(param);
 	}
-	
+
 	/**
-	 * Creates a wrapvalue method that determines whether to continuously add 
-	 * or subtract 2 to value until it reaches the given range.
+	 * Creates a wrapvalue method that determines whether to continuously add or
+	 * subtract 2 to value until it reaches the given range.
 	 * 
-	 * @param value 
+	 * @param value
 	 * 
 	 * @return returns the given result from wrapping the value
 	 */
 
 	public static double wrapvalue(double value) {
-		double remainder = 0;
-		double quotient;
-		double result = 0;
 
 		if (value > 1) {
 			while (value > 1) {
 				value -= 2;
-
 			}
-			remainder = value % 1;
-
 		}
 		if (value < -1) {
 			while (value < -1) {
 				value += 2;
 			}
-			remainder = value % 1;
-			result = ((value));
-
-		} else {
-			result = value;
 		}
-		return result;
+		return value;
 
 	}
 
