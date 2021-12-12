@@ -37,7 +37,7 @@ public class Frame extends JFrame {
 		ButtonPanel commands = new ButtonPanel(canvas);
 		commands.add("Open", new Reader());
 		commands.add("Evaluate", new ThreadedCommand<Pixmap>(canvas, new Evaluater(input)));
-		commands.add("Save", new Writer());
+		commands.add("Save", new Writer(input));
 
 		// add panel to hold commands, input, and canvas
 		JPanel mainPanel = new JPanel();
