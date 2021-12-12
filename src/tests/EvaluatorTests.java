@@ -5,6 +5,7 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +16,7 @@ import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.language.expressions.X;
 import picasso.parser.language.expressions.Y;
 import picasso.parser.language.expressions.UnaryFunctions.Abs;
+import picasso.parser.language.expressions.UnaryFunctions.Atan;
 import picasso.parser.language.expressions.UnaryFunctions.Ceil;
 import picasso.parser.language.expressions.UnaryFunctions.Cos;
 import picasso.parser.language.expressions.UnaryFunctions.Floor;
@@ -234,5 +236,29 @@ public class EvaluatorTests {
 		assertEquals(new RGBColor(1.0, 1.0, 1.0), myTree.evaluate(4.999, -1));
 		assertEquals(new RGBColor(-0.8509803921568627, -0.8509803921568627, -0.8509803921568627),
 				myTree.evaluate(-4.7, -1));
+	}
+	
+	@Test
+	public void testAtanEvaluation() {
+		Atan myTree = new Atan(new X());
+		
+		assertEquals(new RGBColor(Math.atan(0.4), Math.atan(0.4), Math.atan(0.4)), myTree.evaluate(.4, -1));
+		assertEquals(new RGBColor(Math.atan(0.999), Math.atan(0.999), Math.atan(0.999)), myTree.evaluate(.999, -1));
+		assertEquals(new RGBColor(Math.atan(-0.7), Math.atan(-0.7), Math.atan(-0.7)), myTree.evaluate(-.7, -1));
+		
+		for (int i = -1; i <= 1; i++) {
+			assertEquals(new RGBColor(Math.atan(i), Math.atan(i), Math.atan(i)), myTree.evaluate(i, -i));
+			assertEquals(new RGBColor(Math.atan(i), Math.atan(i), Math.atan(i)), myTree.evaluate(i, i));
+		}
+
+		double[] tests = { -.7, -.00001, .000001, .5 };
+		
+		for (double testVal : tests) {
+			double atanOfTestVal = Math.atan(testVal);
+			assertEquals(new RGBColor(atanOfTestVal, atanOfTestVal, atanOfTestVal), myTree.evaluate(testVal, -1));
+			assertEquals(new RGBColor(atanOfTestVal, atanOfTestVal, atanOfTestVal), myTree.evaluate(testVal, testVal));
+		}
+
+		
 	}
 }

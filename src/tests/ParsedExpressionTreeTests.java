@@ -2,6 +2,7 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +15,7 @@ import picasso.parser.language.expressions.X;
 import picasso.parser.language.expressions.Y;
 import picasso.parser.language.expressions.BinaryOperators.Addition;
 import picasso.parser.language.expressions.UnaryFunctions.Abs;
+import picasso.parser.language.expressions.UnaryFunctions.Atan;
 import picasso.parser.language.expressions.UnaryFunctions.Ceil;
 import picasso.parser.language.expressions.UnaryFunctions.Cos;
 import picasso.parser.language.expressions.UnaryFunctions.Floor;
@@ -154,6 +156,16 @@ public class ParsedExpressionTreeTests {
 	public void imageWrapFunctionTests() {
 		ExpressionTreeNode e = parser.makeExpression("imagewrap(\"tanx.jpg\", x + x, y)");
 		assertEquals(new Imagewrap("tanx.jpg", new Addition(new X(), new X()), new Y()), e);
+	}
+	
+	@Test
+	public void atanFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("atan( x )");
+		assertEquals(new Atan(new X()), e);
+
+		e = parser.makeExpression("atan ( x + y )");
+		assertEquals(new Atan(new Addition(new X(), new Y())), e);
+		
 	}
 
 }
