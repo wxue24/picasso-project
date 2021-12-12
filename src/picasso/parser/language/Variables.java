@@ -56,6 +56,7 @@ public class Variables {
 	 *         expression
 	 */
 	public String[] addVariable(String input) {
+
 		// parses input
 		String[] v = parse(input);
 
@@ -67,6 +68,7 @@ public class Variables {
 		variablesMapping.put(v[0], exp);
 		variablesMappingString.put(v[0], v[1]);
 		return v;
+
 	}
 
 	/**
@@ -119,8 +121,13 @@ public class Variables {
 				throw new IllegalArgumentException("Can't use function names for variables");
 			} else if (key.toLowerCase().equals("x") || key.toLowerCase().equals("y")) {
 				throw new IllegalArgumentException("Can't use 'x' or 'y' for variables");
-			} else
-				return new String[] { key, val };
+			} else if (variablesMapping.containsKey(key)) {
+				throw new IllegalArgumentException("Variable name already in use");
+			} else if (!key.matches("[a-zA-Z]+")) {
+				throw new IllegalArgumentException("Can only use letters in variable name");
+			} else {
+			}
+			return new String[] { key, val };
 		}
 	}
 
