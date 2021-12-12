@@ -16,7 +16,7 @@ import picasso.parser.tokens.Token;
  * @author wxue
  *
  */
-public class ImageWrapAnalyzer implements SemanticAnalyzerInterface {
+public class ImagewrapAnalyzer implements SemanticAnalyzerInterface {
 
 	@Override
 	public ExpressionTreeNode generateExpressionTree(Stack<Token> tokens) {
