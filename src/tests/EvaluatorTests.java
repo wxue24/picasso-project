@@ -15,6 +15,7 @@ import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.language.expressions.X;
 import picasso.parser.language.expressions.Y;
 import picasso.parser.language.expressions.UnaryFunctions.Abs;
+import picasso.parser.language.expressions.UnaryFunctions.Atan;
 import picasso.parser.language.expressions.UnaryFunctions.Ceil;
 import picasso.parser.language.expressions.UnaryFunctions.Cos;
 import picasso.parser.language.expressions.UnaryFunctions.Floor;
@@ -234,5 +235,30 @@ public class EvaluatorTests {
 		assertEquals(new RGBColor(1.0, 1.0, 1.0), myTree.evaluate(4.999, -1));
 		assertEquals(new RGBColor(-0.8509803921568627, -0.8509803921568627, -0.8509803921568627),
 				myTree.evaluate(-4.7, -1));
+	}
+	
+	@Test
+	public void testAtanEvaluation() {
+		Atan myTree = new Atan(new X());
+
+		// some straightforward tests
+		assertEquals(new RGBColor(Math.atan(.4), Math.atan(.4), Math.atan(.4)), myTree.evaluate(.4, -1));
+		assertEquals(new RGBColor(Math.atan(.999), Math.atan(.999), Math.atan(.999)), myTree.evaluate(.999, -1));
+		assertEquals(new RGBColor(Math.atan(-.7), Math.atan(-.7), Math.atan(-.7)), myTree.evaluate(-.7, -1));
+
+		// test the ints; remember that y's value doesn't matter
+		for (int i = -1; i <= 1; i++) {
+			assertEquals(new RGBColor(Math.atan(i), Math.atan(i), Math.atan(i)), myTree.evaluate(i, -i));
+			assertEquals(new RGBColor(Math.atan(i), Math.atan(i), Math.atan(i)), myTree.evaluate(i, i));
+		}
+
+		double[] tests = { -.7, -.00001, .000001, .5 };
+
+		for (double testVal : tests) {
+			double tanOfTestVal = Math.atan(testVal);
+			assertEquals(new RGBColor(tanOfTestVal, tanOfTestVal, tanOfTestVal), myTree.evaluate(testVal, -1));
+			assertEquals(new RGBColor(tanOfTestVal, tanOfTestVal, tanOfTestVal), myTree.evaluate(testVal, testVal));
+		}
+
 	}
 }

@@ -1,7 +1,7 @@
 package picasso.parser.tokens.functions;
 
 /**
- * Represents the Cosine function token
+ * Represents the Tangent function token
  * @author Chapin Bassi
  */
 
