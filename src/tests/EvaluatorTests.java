@@ -17,6 +17,7 @@ import picasso.parser.language.expressions.Y;
 import picasso.parser.language.expressions.UnaryFunctions.Abs;
 import picasso.parser.language.expressions.UnaryFunctions.Atan;
 import picasso.parser.language.expressions.UnaryFunctions.Ceil;
+import picasso.parser.language.expressions.UnaryFunctions.Clamp;
 import picasso.parser.language.expressions.UnaryFunctions.Cos;
 import picasso.parser.language.expressions.UnaryFunctions.Floor;
 import picasso.parser.language.expressions.UnaryFunctions.Sin;
@@ -226,6 +227,29 @@ public class EvaluatorTests {
 		}
 
 	}
+	
+	@Test
+	public void testClampEvaluation() {
+		Clamp myTree = new Clamp(new X());
+
+		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(1.5, -1));
+		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(3.0, -1));
+		assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(-1.5, -1));
+
+		for (int i = -1; i <= 1; i++) {
+			assertEquals(new RGBColor(i, i, i), myTree.evaluate(i, -i));
+			assertEquals(new RGBColor(i, i, i), myTree.evaluate(i, i));
+		}
+		double[] tests = { -.7, -.00001, .000001, .5 };
+
+		for (double testVal : tests) {
+			double clampOfTestVal = testVal;
+			assertEquals(new RGBColor(clampOfTestVal, clampOfTestVal, clampOfTestVal), myTree.evaluate(testVal, -1));
+			assertEquals(new RGBColor(clampOfTestVal, clampOfTestVal, clampOfTestVal), myTree.evaluate(testVal, testVal));
+		}
+
+	}
+	
 
 	@Test
 	public void testImageWrapEvaluation() {

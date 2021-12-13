@@ -14,7 +14,7 @@ public class WrapToken extends FunctionToken{
 		
 		super("Wrap Token Function");
 		
-		
+	
 	}
 
 }

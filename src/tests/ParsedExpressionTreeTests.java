@@ -15,6 +15,7 @@ import picasso.parser.language.expressions.Y;
 import picasso.parser.language.expressions.BinaryOperators.Addition;
 import picasso.parser.language.expressions.UnaryFunctions.Abs;
 import picasso.parser.language.expressions.UnaryFunctions.Ceil;
+import picasso.parser.language.expressions.UnaryFunctions.Clamp;
 import picasso.parser.language.expressions.UnaryFunctions.Cos;
 import picasso.parser.language.expressions.UnaryFunctions.Floor;
 import picasso.parser.language.expressions.UnaryFunctions.Sin;
@@ -141,6 +142,16 @@ public class ParsedExpressionTreeTests {
 		e = parser.makeExpression("wrap ( x + y )");
 		assertEquals(new Wrap(new Addition(new X(), new Y())), e);
 	}
+	
+	@Test
+	public void clampFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("clamp( x )");
+		assertEquals(new Clamp(new X()), e);
+
+		e = parser.makeExpression("clamp ( x + y )");
+		assertEquals(new Clamp(new Addition(new X(), new Y())), e);
+	}
+	
 
 	@Test
 	public void variablesExpressionTests() {
