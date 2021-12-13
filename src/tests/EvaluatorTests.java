@@ -20,6 +20,7 @@ import picasso.parser.language.expressions.UnaryFunctions.Ceil;
 import picasso.parser.language.expressions.UnaryFunctions.Cos;
 import picasso.parser.language.expressions.UnaryFunctions.Exp;
 import picasso.parser.language.expressions.UnaryFunctions.Floor;
+import picasso.parser.language.expressions.UnaryFunctions.Log;
 import picasso.parser.language.expressions.UnaryFunctions.Sin;
 import picasso.parser.language.expressions.UnaryFunctions.Tan;
 import picasso.parser.language.expressions.UnaryFunctions.Wrap;
@@ -264,7 +265,7 @@ public class EvaluatorTests {
 	@Test
 	public void testExpEvaluation() {
 		Exp myTree = new Exp(new X());
-		
+
 		assertEquals(new RGBColor(Math.exp(0.4), Math.exp(0.4), Math.exp(0.4)), myTree.evaluate(.4, -1));
 		assertEquals(new RGBColor(Math.exp(0.999), Math.exp(0.999), Math.exp(0.999)), myTree.evaluate(.999, -1));
 		assertEquals(new RGBColor(Math.exp(-0.7), Math.exp(-0.7), Math.exp(-0.7)), myTree.evaluate(-.7, -1));
@@ -283,4 +284,30 @@ public class EvaluatorTests {
 		}
 
 	}
+
+	@Test
+	public void testLogEvaluation() {
+		Log myTree = new Log(new X());
+
+		assertEquals(new RGBColor(Math.log(0.4), Math.log(0.4), Math.log(0.4)), myTree.evaluate(.4, -1));
+		assertEquals(new RGBColor(Math.log(0.999), Math.log(0.999), Math.log(0.999)), myTree.evaluate(.999, -1));
+		assertEquals(new RGBColor(Math.log(0.7), Math.log(0.7), Math.log(0.7)), myTree.evaluate(-.7, -1));
+
+		
+		for (int i = -1; i <= 1; i++) {
+			double expectedVal = Math.log(Math.abs(i));
+			RGBColor expected = new RGBColor(expectedVal, expectedVal, expectedVal);
+			assertEquals(expected, myTree.evaluate(i, -i));
+		}
+
+		double[] tests = { -.7, -.00001, .000001, .5 };
+
+		for (double testVal : tests) {
+			double logOfTestVal = Math.log(Math.abs(testVal));
+			RGBColor expected = new RGBColor(logOfTestVal, logOfTestVal, logOfTestVal);
+			assertEquals(expected, myTree.evaluate(testVal, -1));
+			
+		}
+	}
+
 }
