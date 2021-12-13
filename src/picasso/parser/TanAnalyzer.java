@@ -10,6 +10,7 @@ import java.util.Stack;
  */
 
 import picasso.parser.language.ExpressionTreeNode;
+import picasso.parser.language.expressions.UnaryFunctions.Atan;
 import picasso.parser.language.expressions.UnaryFunctions.Tan;
 import picasso.parser.tokens.Token;
 

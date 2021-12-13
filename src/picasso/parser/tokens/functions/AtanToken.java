@@ -1,16 +1,12 @@
 package picasso.parser.tokens.functions;
 
 /**
- * Represents the arc tangent token
- * 
- * @author calebchoe
- *
+ * Represents the ArcTangent function token
+ * @author Chapin Bassi
  */
 
 public class AtanToken extends FunctionToken {
-
 	public AtanToken() {
-		super("Arc Tangent Token");
+		super("Arctangent Function Token");
 	}
-
 }
