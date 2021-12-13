@@ -27,6 +27,7 @@ import picasso.parser.tokens.functions.CosToken;
 import picasso.parser.tokens.functions.ExpToken;
 import picasso.parser.tokens.functions.FloorToken;
 import picasso.parser.tokens.functions.ImagewrapToken;
+import picasso.parser.tokens.functions.LogToken;
 import picasso.parser.tokens.functions.SinToken;
 import picasso.parser.tokens.functions.TanToken;
 import picasso.parser.tokens.functions.WrapToken;
@@ -168,7 +169,15 @@ public class TokenizerTest {
 		assertEquals(new LeftParenToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
+		
+		expression = "log(x)";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new LogToken(), tokens.get(0));
+		assertEquals(new LeftParenToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("x"), tokens.get(2));
+		assertEquals(new RightParenToken(), tokens.get(3));
 
+		
 	}
 
 	@Test
