@@ -198,7 +198,7 @@ public class TokenizerTest {
 
 	@Test
 	public void testTokenizeMultiArgumentFunctionExpression() {
-		String expression = "imagewrap(\"AmoebaMorris.png\", x + x, y)";
+		String expression = "imageWrap(\"AmoebaMorris.png\", x + x, y)";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new ImagewrapToken(), tokens.get(0));
 		assertEquals(new LeftParenToken(), tokens.get(1));
