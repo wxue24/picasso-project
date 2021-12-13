@@ -24,6 +24,7 @@ import picasso.parser.tokens.functions.AtanToken;
 import picasso.parser.tokens.functions.CeilToken;
 import picasso.parser.tokens.functions.ClampToken;
 import picasso.parser.tokens.functions.CosToken;
+import picasso.parser.tokens.functions.ExpToken;
 import picasso.parser.tokens.functions.FloorToken;
 import picasso.parser.tokens.functions.ImagewrapToken;
 import picasso.parser.tokens.functions.SinToken;
@@ -41,7 +42,7 @@ public class TokenizerTest {
 		tokenizer = new Tokenizer();
 		Variables.getInstance().removeAll();
 	}
-
+ 
 	/**
 	 * Test that parsing an expression with a comment works
 	 */
@@ -164,6 +165,13 @@ public class TokenizerTest {
 		expression = "clamp(x)";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new ClampToken(), tokens.get(0));
+		assertEquals(new LeftParenToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("x"), tokens.get(2));
+		assertEquals(new RightParenToken(), tokens.get(3));
+		
+		expression = "exp(x)";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new ExpToken(), tokens.get(0));
 		assertEquals(new LeftParenToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
