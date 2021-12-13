@@ -19,6 +19,7 @@ import picasso.parser.language.expressions.UnaryFunctions.Atan;
 import picasso.parser.language.expressions.UnaryFunctions.Ceil;
 import picasso.parser.language.expressions.UnaryFunctions.Clamp;
 import picasso.parser.language.expressions.UnaryFunctions.Cos;
+import picasso.parser.language.expressions.UnaryFunctions.Exp;
 import picasso.parser.language.expressions.UnaryFunctions.Floor;
 import picasso.parser.language.expressions.UnaryFunctions.Log;
 import picasso.parser.language.expressions.UnaryFunctions.Sin;
@@ -309,5 +310,28 @@ public class EvaluatorTests {
 			assertEquals(expected, myTree.evaluate(testVal, -1));
 
 		}
+	}
+
+	@Test
+	public void testExpEvaluation() {
+		Exp myTree = new Exp(new X());
+
+		assertEquals(new RGBColor(Math.exp(0.4), Math.exp(0.4), Math.exp(0.4)), myTree.evaluate(.4, -1));
+		assertEquals(new RGBColor(Math.exp(0.999), Math.exp(0.999), Math.exp(0.999)), myTree.evaluate(.999, -1));
+		assertEquals(new RGBColor(Math.exp(-0.7), Math.exp(-0.7), Math.exp(-0.7)), myTree.evaluate(-.7, -1));
+
+		for (int i = -1; i <= 1; i++) {
+			assertEquals(new RGBColor(Math.exp(i), Math.exp(i), Math.exp(i)), myTree.evaluate(i, -i));
+			assertEquals(new RGBColor(Math.exp(i), Math.exp(i), Math.exp(i)), myTree.evaluate(i, i));
+		}
+
+		double[] tests = { -.7, -.00001, .000001, .5 };
+
+		for (double testVal : tests) {
+			double expOfTestVal = Math.exp(testVal);
+			assertEquals(new RGBColor(expOfTestVal, expOfTestVal, expOfTestVal), myTree.evaluate(testVal, -1));
+			assertEquals(new RGBColor(expOfTestVal, expOfTestVal, expOfTestVal), myTree.evaluate(testVal, testVal));
+		}
+
 	}
 }
