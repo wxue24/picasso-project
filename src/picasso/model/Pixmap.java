@@ -50,7 +50,7 @@ public class Pixmap {
 	/**
 	 * 
 	 * @param image
-	 * @return
+	 * @return image
 	 */
 	public static BufferedImage getImage(Pixmap image) {
 		return image.myImage;
