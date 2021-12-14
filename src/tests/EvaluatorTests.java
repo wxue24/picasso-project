@@ -19,6 +19,7 @@ import picasso.parser.language.expressions.MultiArgumentFunctions.ImageClip;
 import picasso.parser.language.expressions.MultiArgumentFunctions.ImageWrap;
 import picasso.parser.language.expressions.MultiArgumentFunctions.PerlinBW;
 import picasso.parser.language.expressions.MultiArgumentFunctions.PerlinColor;
+import picasso.parser.language.expressions.MultiArgumentFunctions.Random;
 import picasso.parser.language.expressions.UnaryFunctions.Abs;
 import picasso.parser.language.expressions.UnaryFunctions.Atan;
 import picasso.parser.language.expressions.UnaryFunctions.Ceil;
@@ -57,7 +58,7 @@ public class EvaluatorTests {
 			assertEquals(new RGBColor(1, -1, 1), e.evaluate(i, i));
 		}
 	}
-
+  
 	@Test
 	public void testTanEvaluation() {
 		Tan myTree = new Tan(new X());
@@ -383,6 +384,15 @@ public class EvaluatorTests {
 			assertEquals(new RGBColor(expOfTestVal, expOfTestVal, expOfTestVal), myTree.evaluate(testVal, testVal));
 		}
 
+	}
+	
+	@Test
+	public void testRandom() {
+		Random myTree = new Random();
+		
+		assertEquals(myTree.evaluate(0.2, .5), myTree.evaluate(-0.3, -0.6));
+		assertEquals(myTree.evaluate(0, -0.2), myTree.evaluate(0.2, -0.9));
+		
 	}
 }
 	

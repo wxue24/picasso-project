@@ -297,6 +297,11 @@ public class TokenizerTest {
 		assertEquals(new CommaToken(), tokens.get(7));
 		assertEquals(new IdentifierToken("y"), tokens.get(8));
 		assertEquals(new RightParenToken(), tokens.get(9));  
+		
+		expression = "random()";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new RandomToken(), tokens.get(0));
+		
 	}
 	
 }
