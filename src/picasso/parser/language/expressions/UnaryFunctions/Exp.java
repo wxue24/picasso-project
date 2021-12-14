@@ -1,33 +1,33 @@
 package picasso.parser.language.expressions.UnaryFunctions;
 
-import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.language.expressions.UnaryFunction;
+import picasso.parser.language.ExpressionTreeNode;
 
 /**
- * Represents the exponent function in the Picasso language.
  * 
- * @author cbassi
- * 
+ * @author calebchoe
+ *
  */
 
 public class Exp extends UnaryFunction {
-	
+
 	/**
-	 * Create an exponent expression that takes as a parameter the given expression
+	 * Create a exp expression that takes as a parameter the given expression
 	 * 
-	 * @param param the expression to floor
+	 * @param param the expression to exp
 	 */
-	
+
 	public Exp(ExpressionTreeNode param) {
 		super(param);
+
 	}
-	
+
 	/**
-	 * Evaluates this expression at the given x,y point by evaluating the exponent of
-	 * the function's parameter.
+	 * Evaluates this expression at the given x,y point by evaluating the exp of the
+	 * function's parameter.
 	 * 
-	 * @return the color from evaluating the exponent of the expression's parameter
+	 * @return the color from evaluating the exp of the expression's parameter
 	 */
 
 	@Override

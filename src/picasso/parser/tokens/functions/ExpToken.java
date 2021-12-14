@@ -1,18 +1,14 @@
 package picasso.parser.tokens.functions;
 
-/**
- * Represents the exponent function token
+ * Represents the exp token function
  * 
+ * @author calebchoe
+ *
  */
 
 public class ExpToken extends FunctionToken {
-	
-	public ExpToken(String name) {
-		super(name);
-		// TODO Auto-generated constructor stub
-	}
 
 	public ExpToken() {
-		super("Exponent Function Token");
+		super("Exp Token Function");
 	}
 }

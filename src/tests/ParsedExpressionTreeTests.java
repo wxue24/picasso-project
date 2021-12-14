@@ -18,11 +18,13 @@ import picasso.parser.language.expressions.MultiArgumentFunctions.ImageWrap;
 import picasso.parser.language.expressions.MultiArgumentFunctions.PerlinBW;
 import picasso.parser.language.expressions.MultiArgumentFunctions.PerlinColor;
 import picasso.parser.language.expressions.UnaryFunctions.Abs;
+import picasso.parser.language.expressions.UnaryFunctions.Atan;
 import picasso.parser.language.expressions.UnaryFunctions.Ceil;
 import picasso.parser.language.expressions.UnaryFunctions.Clamp;
 import picasso.parser.language.expressions.UnaryFunctions.Cos;
 import picasso.parser.language.expressions.UnaryFunctions.Exp;
 import picasso.parser.language.expressions.UnaryFunctions.Floor;
+import picasso.parser.language.expressions.UnaryFunctions.Log;
 import picasso.parser.language.expressions.UnaryFunctions.Sin;
 import picasso.parser.language.expressions.UnaryFunctions.Tan;
 import picasso.parser.language.expressions.UnaryFunctions.Wrap;
@@ -205,8 +207,31 @@ public class ParsedExpressionTreeTests {
 	}
 	
 	@Test
-	public void RandomFunctionTests() {
-		ExpressionTreeNode e = parser.makeExpression("random()");
-		assertEquals(new Random(), e);
+	public void atanFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("atan( x )");
+		assertEquals(new Atan(new X()), e);
+
+		e = parser.makeExpression("atan( x + y )");
+		assertEquals(new Atan(new Addition(new X(), new Y())), e);
+
+	}
+
+	@Test
+	public void expFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("exp( x )");
+		assertEquals(new Exp(new X()), e);
+
+		e = parser.makeExpression("exp( x + y )");
+		assertEquals(new Exp(new Addition(new X(), new Y())), e);
+
+	}
+
+	@Test
+	public void logFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("log( x )");
+		assertEquals(new Log(new X()), e);
+
+		e = parser.makeExpression("log( x + y )");
+		assertEquals(new Log(new Addition(new X(), new Y())), e);
 	}
 }
