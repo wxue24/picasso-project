@@ -285,6 +285,30 @@ public class EvaluatorTests {
 			assertEquals(new RGBColor(tanOfTestVal, tanOfTestVal, tanOfTestVal), myTree.evaluate(testVal, -1));
 			assertEquals(new RGBColor(tanOfTestVal, tanOfTestVal, tanOfTestVal), myTree.evaluate(testVal, testVal));
 		}
+	}
+	
+	@Test
+	public void testExpEvaluation() {
+		Exp myTree = new Exp(new X());
+
+		// some straightforward tests
+		assertEquals(new RGBColor(Math.exp(.4), Math.exp(.4), Math.exp(.4)), myTree.evaluate(.4, -1));
+		assertEquals(new RGBColor(Math.exp(.999), Math.exp(.999), Math.exp(.999)), myTree.evaluate(.999, -1));
+		assertEquals(new RGBColor(Math.exp(-.7), Math.exp(-.7), Math.exp(-.7)), myTree.evaluate(-.7, -1));
+
+		// test the ints; remember that y's value doesn't matter
+		for (int i = -1; i <= 1; i++) {
+			assertEquals(new RGBColor(Math.exp(i), Math.exp(i), Math.exp(i)), myTree.evaluate(i, -i));
+			assertEquals(new RGBColor(Math.exp(i), Math.exp(i), Math.exp(i)), myTree.evaluate(i, i));
+		}
+
+		double[] tests = { -.7, -.00001, .000001, .5 };
+
+		for (double testVal : tests) {
+			double expOfTestVal = Math.exp(testVal);
+			assertEquals(new RGBColor(expOfTestVal, expOfTestVal, expOfTestVal), myTree.evaluate(testVal, -1));
+			assertEquals(new RGBColor(expOfTestVal, expOfTestVal, expOfTestVal), myTree.evaluate(testVal, testVal));
+		}
 
 	}
 

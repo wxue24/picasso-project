@@ -28,6 +28,7 @@ public class Floor extends UnaryFunction {
 	 * 
 	 * @return the color from evaluating the floor of the expression's parameter
 	 */
+	
 	@Override
 	public RGBColor evaluate(double x, double y) {
 		RGBColor result = param.evaluate(x, y);

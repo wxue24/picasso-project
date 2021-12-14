@@ -29,6 +29,7 @@ public class Exp extends UnaryFunction {
 	 * 
 	 * @return the color from evaluating the exp of the expression's parameter
 	 */
+
 	@Override
 	public RGBColor evaluate(double x, double y) {
 		RGBColor result = param.evaluate(x, y);

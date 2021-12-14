@@ -155,6 +155,14 @@ public class ParsedExpressionTreeTests {
 		assertEquals(new Clamp(new Addition(new X(), new Y())), e);
 	}
 	
+	@Test
+	public void expFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("exp( x )");
+		assertEquals(new Exp(new X()), e);
+
+		e = parser.makeExpression("exp( x + y )");
+		assertEquals(new Exp(new Addition(new X(), new Y())), e);
+	}
 
 	@Test
 	public void variablesExpressionTests() {
@@ -169,6 +177,7 @@ public class ParsedExpressionTreeTests {
 		ExpressionTreeNode e = parser.makeExpression("imagewrap(\"tanx.jpg\", x + x, y)");
 		assertEquals(new Imagewrap("tanx.jpg", new Addition(new X(), new X()), new Y()), e);
 	}
+	
 
 	@Test
 	public void atanFunctionTests() {

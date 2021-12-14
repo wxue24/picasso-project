@@ -7,9 +7,9 @@ package picasso.parser.tokens.functions;
  * Represents the ImageWrap function token
  *
  */
-public class ImagewrapToken extends FunctionToken {
+public class ImageWrapToken extends FunctionToken {
 
-	public ImagewrapToken() {
+	public ImageWrapToken() {
 		super("Image Wrap function token");
 	}
 
