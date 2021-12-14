@@ -15,7 +15,7 @@ import picasso.parser.tokens.Token;
  *  
  * @author cbassi
  *
- */ 
+ */  
 
 public class PerlinColorAnalyzer implements SemanticAnalyzerInterface {
 	

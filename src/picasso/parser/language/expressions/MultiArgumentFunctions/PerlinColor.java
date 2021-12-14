@@ -8,7 +8,7 @@ import picasso.model.Pixmap;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.MultiArgumentFunction;
 import picasso.parser.language.expressions.RGBColor;
-
+  
 /**
  * Represents the perlinColor function in the Picasso language
  * @author cbassi
