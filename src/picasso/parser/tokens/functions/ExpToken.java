@@ -12,5 +12,4 @@ public class ExpToken extends FunctionToken {
 	public ExpToken() {
 		super("Exp Token Function");
 	}
-
 }

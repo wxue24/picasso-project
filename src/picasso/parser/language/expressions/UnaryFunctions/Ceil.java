@@ -1,5 +1,6 @@
 package picasso.parser.language.expressions.UnaryFunctions;
 
+import picasso.model.ImprovedNoise;
 import picasso.parser.language.ExpressionTreeNode;
 
 import picasso.parser.language.expressions.RGBColor;
@@ -38,5 +39,6 @@ public class Ceil extends UnaryFunction {
 
 		return new RGBColor(red, green, blue);
 	}
+	
 
 }
