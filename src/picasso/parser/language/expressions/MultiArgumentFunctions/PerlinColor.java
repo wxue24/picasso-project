@@ -31,7 +31,7 @@ public class PerlinColor extends MultiArgumentFunction {
 		this.ycoordexp = ycoordexp;
 	}
 	
-	@Override 
+	@Override  
 	public RGBColor evaluate(double x, double y) {
 		// Evaluate expression
 		RGBColor xcoord = xcoordexp.evaluate(x, y);
