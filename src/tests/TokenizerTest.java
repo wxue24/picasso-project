@@ -27,11 +27,7 @@ import picasso.parser.tokens.functions.ClampToken;
 import picasso.parser.tokens.functions.CosToken;
 import picasso.parser.tokens.functions.ExpToken;
 import picasso.parser.tokens.functions.FloorToken;
-import picasso.parser.tokens.functions.ImageClipToken;
-import picasso.parser.tokens.functions.ImageWrapToken;
-import picasso.parser.tokens.functions.PerlinBWToken;
-import picasso.parser.tokens.functions.PerlinColorToken;
-import picasso.parser.tokens.functions.RandomToken;
+import picasso.parser.tokens.functions.ImagewrapToken;
 import picasso.parser.tokens.functions.LogToken;
 import picasso.parser.tokens.functions.SinToken;
 import picasso.parser.tokens.functions.TanToken;
@@ -48,7 +44,7 @@ public class TokenizerTest {
 		tokenizer = new Tokenizer();
 		Variables.getInstance().removeAll();
 	}
- 
+
 	/**
 	 * Test that parsing an expression with a comment works
 	 */
@@ -196,13 +192,6 @@ public class TokenizerTest {
 		assertEquals(new LeftParenToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
-		
-		expression = "exp(x)";
-		tokens = tokenizer.parseTokens(expression);
-		assertEquals(new ExpToken(), tokens.get(0));
-		assertEquals(new LeftParenToken(), tokens.get(1));
-		assertEquals(new IdentifierToken("x"), tokens.get(2));
-		assertEquals(new RightParenToken(), tokens.get(3));
 	}
 	
 	
@@ -254,7 +243,7 @@ public class TokenizerTest {
 	public void testTokenizeMultiArgumentFunctionExpression() {
 		String expression = "imageWrap(\"AmoebaMorris.png\", x + x, y)";
 		tokens = tokenizer.parseTokens(expression);
-		assertEquals(new ImageWrapToken(), tokens.get(0));
+		assertEquals(new ImagewrapToken(), tokens.get(0));
 		assertEquals(new LeftParenToken(), tokens.get(1));
 		assertEquals(new StringToken("AmoebaMorris.png"), tokens.get(2));
 		assertEquals(new CommaToken(), tokens.get(3));
@@ -301,7 +290,6 @@ public class TokenizerTest {
 		expression = "random()";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new RandomToken(), tokens.get(0));
-		
 	}
-	
+
 }
