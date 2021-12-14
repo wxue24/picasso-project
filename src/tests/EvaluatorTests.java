@@ -38,7 +38,7 @@ import picasso.parser.language.expressions.UnaryFunctions.Wrap;
  */
 public class EvaluatorTests {
 
-	private ExpressionTreeGenerator parser;
+	private ExpressionTreeGenerator parser; 
 
 	/**
 	 * @throws java.lang.Exception
