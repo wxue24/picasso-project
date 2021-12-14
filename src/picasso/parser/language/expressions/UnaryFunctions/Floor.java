@@ -35,7 +35,7 @@ public class Floor extends UnaryFunction {
 		double red = Math.floor(result.getRed());
 		double green = Math.floor(result.getGreen());
 		double blue = Math.floor(result.getBlue());
-
+ 
 		return new RGBColor(red, green, blue);
 	}
 

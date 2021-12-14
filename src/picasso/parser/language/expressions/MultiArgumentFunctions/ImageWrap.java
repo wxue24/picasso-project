@@ -13,7 +13,7 @@ import picasso.parser.language.expressions.UnaryFunctions.Wrap;
  * Represents the imageWrap function in the Picasso language
  * 
  * 
- * @author cbassi
+ * @author cbassi 
  *
  */
 public class ImageWrap extends ImageFunctions {

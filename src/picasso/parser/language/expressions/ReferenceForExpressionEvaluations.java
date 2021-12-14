@@ -17,7 +17,7 @@ public enum ReferenceForExpressionEvaluations {
 			double blue = left.getBlue();
 			return new RGBColor(red, green, blue);
 		}
-	},
+	}, 
 	Y {
 		public RGBColor evaluate(RGBColor unused, RGBColor right) {
 			double red = right.getRed();

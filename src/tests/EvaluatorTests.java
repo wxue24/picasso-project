@@ -8,12 +8,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import picasso.model.ImprovedNoise;
 import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
-import picasso.parser.language.expressions.Imagewrap;
 import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.language.expressions.X;
 import picasso.parser.language.expressions.Y;
+import picasso.parser.language.expressions.BinaryOperators.Addition;
+import picasso.parser.language.expressions.MultiArgumentFunctions.ImageClip;
+import picasso.parser.language.expressions.MultiArgumentFunctions.ImageWrap;
+import picasso.parser.language.expressions.MultiArgumentFunctions.PerlinBW;
+import picasso.parser.language.expressions.MultiArgumentFunctions.PerlinColor;
 import picasso.parser.language.expressions.UnaryFunctions.Abs;
 import picasso.parser.language.expressions.UnaryFunctions.Atan;
 import picasso.parser.language.expressions.UnaryFunctions.Ceil;
@@ -34,7 +39,7 @@ import picasso.parser.language.expressions.UnaryFunctions.Wrap;
  */
 public class EvaluatorTests {
 
-	private ExpressionTreeGenerator parser;
+	private ExpressionTreeGenerator parser; 
 
 	/**
 	 * @throws java.lang.Exception
@@ -227,7 +232,7 @@ public class EvaluatorTests {
 			assertEquals(new RGBColor(wrapOfTestVal, wrapOfTestVal, wrapOfTestVal), myTree.evaluate(testVal, -1));
 			assertEquals(new RGBColor(wrapOfTestVal, wrapOfTestVal, wrapOfTestVal), myTree.evaluate(testVal, testVal));
 		}
-
+ 
 	}
 
 	@Test
@@ -235,7 +240,7 @@ public class EvaluatorTests {
 		Clamp myTree = new Clamp(new X());
 
 		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(1.5, -1));
-		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(3.0, -1));
+		assertEquals(new RGBColor(1, 1, 1), myTree.evaluate(6, -1));
 		assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(-1.5, -1));
 
 		for (int i = -1; i <= 1; i++) {
@@ -251,16 +256,6 @@ public class EvaluatorTests {
 					myTree.evaluate(testVal, testVal));
 		}
 
-	}
-
-	@Test
-	public void testImageWrapEvaluation() {
-		Imagewrap myTree = new Imagewrap("tanx.jpg", new X(), new Y());
-		assertEquals(new RGBColor(0.41960784313725497, 0.41960784313725497, 0.41960784313725497),
-				myTree.evaluate(.4, -1));
-		assertEquals(new RGBColor(1.0, 1.0, 1.0), myTree.evaluate(4.999, -1));
-		assertEquals(new RGBColor(-0.8509803921568627, -0.8509803921568627, -0.8509803921568627),
-				myTree.evaluate(-4.7, -1));
 	}
 
 	@Test
@@ -287,30 +282,61 @@ public class EvaluatorTests {
 		}
 	}
 	
+
 	@Test
-	public void testExpEvaluation() {
-		Exp myTree = new Exp(new X());
-
-		// some straightforward tests
-		assertEquals(new RGBColor(Math.exp(.4), Math.exp(.4), Math.exp(.4)), myTree.evaluate(.4, -1));
-		assertEquals(new RGBColor(Math.exp(.999), Math.exp(.999), Math.exp(.999)), myTree.evaluate(.999, -1));
-		assertEquals(new RGBColor(Math.exp(-.7), Math.exp(-.7), Math.exp(-.7)), myTree.evaluate(-.7, -1));
-
-		// test the ints; remember that y's value doesn't matter
-		for (int i = -1; i <= 1; i++) {
-			assertEquals(new RGBColor(Math.exp(i), Math.exp(i), Math.exp(i)), myTree.evaluate(i, -i));
-			assertEquals(new RGBColor(Math.exp(i), Math.exp(i), Math.exp(i)), myTree.evaluate(i, i));
-		}
-
-		double[] tests = { -.7, -.00001, .000001, .5 };
-
-		for (double testVal : tests) {
-			double expOfTestVal = Math.exp(testVal);
-			assertEquals(new RGBColor(expOfTestVal, expOfTestVal, expOfTestVal), myTree.evaluate(testVal, -1));
-			assertEquals(new RGBColor(expOfTestVal, expOfTestVal, expOfTestVal), myTree.evaluate(testVal, testVal));
-		}
-
+	public void testImageWrapEvaluation() {
+		ImageWrap myTree = new ImageWrap("floorx.jpg", new X(), new Y());
+		assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(-1, 0));
+		
+		myTree = new ImageWrap("floorx.jpg", new Addition( new X(), new X()), new Addition( new Y(), new Y()));
+		assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(-0.25, 0));
+		assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(0.8, 0));
 	}
+	
+	
+	@Test
+	public void testImageClipEvaluation() {
+		ImageClip myTree = new ImageClip("floorx.jpg", new X(), new Y());
+		assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(-1, 0));
+		
+		myTree = new ImageClip("floorx.jpg", new Addition( new X(), new X()), new Addition( new Y(), new Y()));
+		assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(-0.25, 0));
+	}
+
+
+	@Test
+	public void testPerlinColorEvaluation() {
+		PerlinColor myTree = new PerlinColor(new X(), new Y());
+		double red = ImprovedNoise.noise(0.5 + 0.3, 0.5 + 0.3, 0);
+		double blue = ImprovedNoise.noise(0.5 + 0.1, 0.5 + 0.1, 0);
+		double green = ImprovedNoise.noise(0.5 - 0.8, 0.5 - 0.8, 0);
+		assertEquals(new RGBColor(red, green, blue), myTree.evaluate(0.5, 0.5));
+		
+		myTree = new PerlinColor(new Addition(new X(), new X()), new Addition(new Y(), new Y()));
+		red = ImprovedNoise.noise(1 + 0.3, 1 + 0.3, 0);
+		blue = ImprovedNoise.noise(1 + 0.1, 1 + 0.1, 0);
+		green = ImprovedNoise.noise(1 - 0.8, 1 - 0.8, 0);
+		assertEquals(new RGBColor(red, green, blue), myTree.evaluate(0.5, 0.5));
+		
+		myTree = new PerlinColor(new Addition(new X(), new X()), new Addition(new Y(), new Y()));
+		red = ImprovedNoise.noise(0.4 + 0.3, 1 + 0.3, 0);
+		blue = ImprovedNoise.noise(0.4 + 0.1, 1 + 0.1, 0);
+		green = ImprovedNoise.noise(0.4 - 0.8, 1 - 0.8, 0);
+		assertEquals(new RGBColor(red, green, blue), myTree.evaluate(0.2, 0.5));
+	}
+	@Test
+	public void testPerlinBWEvaluation() {
+		PerlinBW myTree = new PerlinBW(new X(), new Y());
+		double grey = ImprovedNoise.noise(0.5 + 0.5, 0.5 + 0.5,
+				0.5 + 0.5);
+		assertEquals(new RGBColor(grey, grey, grey), myTree.evaluate(0.5,  0.5));
+		
+		myTree = new PerlinBW(new Addition(new X(), new X()), new Y());
+		grey = ImprovedNoise.noise(0.5 + 0.5, 0.5 + 0.5,
+				0.5 + 0.5);
+		assertEquals(new RGBColor(grey, grey, grey), myTree.evaluate(0.25,  0.5));
+	}
+
 
 	@Test
 	public void testLogEvaluation() {
@@ -359,3 +385,7 @@ public class EvaluatorTests {
 
 	}
 }
+	
+	
+	
+	
