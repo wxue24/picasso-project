@@ -13,7 +13,7 @@ import picasso.parser.tokens.Token;
 /**
  * Handles parsing the ImageWrap function
  * 
- * @author wxue
+ * @author wxue  
  * 
  */
 
@@ -33,5 +33,4 @@ public class ImageWrapAnalyzer implements SemanticAnalyzerInterface {
 
 		return new ImageWrap(name, leftExp, rightExp);
 	}
-
 }

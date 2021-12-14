@@ -20,6 +20,20 @@ public abstract class UnaryFunction extends ExpressionTreeNode {
 	public UnaryFunction(ExpressionTreeNode param) {
 		this.param = param;
 	}
+	
+	/**
+	public 
+	@Override
+	public RGBColor evaluate(double x, double y) {
+		// call method 
+		if {
+			
+		}
+		else {
+			//real current evaluate method
+		}
+	}
+	*/
 
 	/**
 	 * Returns the string representation of the function in the format "<ClassName>:

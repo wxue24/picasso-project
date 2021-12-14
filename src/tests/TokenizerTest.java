@@ -273,7 +273,7 @@ public class TokenizerTest {
 		assertEquals(new CommaToken(), tokens.get(3));
 		assertEquals(new IdentifierToken("y"), tokens.get(4));
 		assertEquals(new RightParenToken(), tokens.get(5));
-		
+		  
 		expression = "perlinBW(y, x+x)";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new PerlinBWToken(), tokens.get(0));
@@ -298,13 +298,5 @@ public class TokenizerTest {
 		assertEquals(new IdentifierToken("y"), tokens.get(8));
 		assertEquals(new RightParenToken(), tokens.get(9));  
 	}
-	
-	@Test
-	public void testRandomExpression() {
-		String expression = "random()";
-		tokens = tokenizer.parseTokens(expression);
-		assertEquals(new RandomToken(), tokens.get(0));
-	}
-	
 	
 }

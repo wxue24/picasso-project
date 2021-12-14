@@ -34,7 +34,7 @@ import picasso.parser.language.expressions.UnaryFunctions.Wrap;
  * compiler errors until some code is created.
  * 
  * @author Sara Sprenkle
- * 
+ *   
  */
 public class ParsedExpressionTreeTests {
 
@@ -158,15 +158,6 @@ public class ParsedExpressionTreeTests {
 		e = parser.makeExpression("clamp ( x + y )");
 		assertEquals(new Clamp(new Addition(new X(), new Y())), e);
 	}
-	
-	@Test
-	public void expFunctionTests() {
-		ExpressionTreeNode e = parser.makeExpression("exp( x )");
-		assertEquals(new Exp(new X()), e);
-
-		e = parser.makeExpression("exp( x + y )");
-		assertEquals(new Exp(new Addition(new X(), new Y())), e);
-	}
  
 	@Test
 	public void variablesExpressionTests() {
@@ -174,18 +165,18 @@ public class ParsedExpressionTreeTests {
 		ExpressionTreeNode e = parser.makeExpression("c + [1,0,0]");
 		assertEquals(new Addition(new Floor(new X()), new RGBColor(1, 0, 0)), e);
 
-	}
+	} 
 
 	@Test
 	public void imageWrapFunctionTests() {
-		ExpressionTreeNode e = parser.makeExpression("imageWrap(\"tanx.jpg\", x + x, y)");
-		assertEquals(new ImageWrap("tanx.jpg", new Addition(new X(), new X()), new Y()), e);
+		ExpressionTreeNode e = parser.makeExpression("imageWrap(\"floorx.jpg\", x + x, y)");
+		assertEquals(new ImageWrap("floorx.jpg", new Addition(new X(), new X()), new Y()), e);
 	}
 	
 	@Test
 	public void imageClipFunctionTests() {
-		ExpressionTreeNode e = parser.makeExpression("imageWrap(\"tanx.jpg\", x + x, y)");
-		assertEquals(new ImageClip("tanx.jpg", new Addition(new X(), new X()), new Y()), e);
+		ExpressionTreeNode e = parser.makeExpression("imageClip(\"floorx.jpg\", x + x, y)");
+		assertEquals(new ImageClip("floorx.jpg", new Addition(new X(), new X()), new Y()), e);
 	}
 	
 	@Test
