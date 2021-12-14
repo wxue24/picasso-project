@@ -40,6 +40,14 @@ public class InputPanel extends JPanel {
 	}
 
 	/**
+	 * 
+	 * @param s string to set input to
+	 */
+	public void setText(String s) {
+		text.setText(s);
+	}
+
+	/**
 	 * Creates a new file for input expression
 	 * 
 	 * @param filename

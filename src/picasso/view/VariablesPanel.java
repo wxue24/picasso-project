@@ -4,19 +4,21 @@
 package picasso.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 
+import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.Variables;
+import picasso.parser.tokens.IdentifierToken;
 
 /**
  * A panel containing the variables the user adds
@@ -29,56 +31,21 @@ public class VariablesPanel extends JPanel {
 	private JPanel variablesPanel;
 	private Variables variables;
 
-	public VariablesPanel() {
+	public VariablesPanel(ExpressionHistoryPanel exphist) {
 		variables = Variables.getInstance();
+
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+		Dimension size = new Dimension(250, 800);
+		setPreferredSize(size);
+		setMaximumSize(size);
+		super.setSize(size);
+
 		add(new JLabel("Variables"));
-		add(addVariablePanel());
 		add(showVariablesPanel());
-	}
 
-	/**
-	 * Helper method to create a panel to add new variables
-	 * 
-	 * @return JPanel
-	 */
-	private JPanel addVariablePanel() {
+		add(exphist);
 
-		JTextField input = new JTextField(20);
-		JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		inputPanel.add(input);
-
-		JButton addVariableButton = new JButton("Add");
-		addVariableButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					String[] v = variables.addVariable(input.getText());
-					variablesPanel.add(createEntry(v[0], v[1]));
-					variablesPanel.revalidate();
-
-				} catch (IllegalArgumentException exception) {
-					ErrorWindow.getInstance().showError(exception.getMessage());
-				}
-
-			}
-		});
-		addVariableButton.setAlignmentX(CENTER_ALIGNMENT);
-
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		buttonPanel.add(addVariableButton);
-
-//		JPanel Input = new JPanel();
-//		Input.setLayout(new BoxLayout(Input, BoxLayout.Y_AXIS));
-//		Input.add(inputPanel);
-
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.add(inputPanel);
-		panel.add(buttonPanel);
-
-		return panel;
 	}
 
 	/**
@@ -91,16 +58,12 @@ public class VariablesPanel extends JPanel {
 		variablesPanel = new JPanel();
 		variablesPanel.setLayout(new BoxLayout(variablesPanel, BoxLayout.Y_AXIS));
 
-		// Populate panel with variables
-		for (Map.Entry<String, String> entry : variables.getVariablesMapping().entrySet()) {
-			variablesPanel.add(createEntry(entry.getKey(), entry.getValue()));
-		}
-
 		JScrollPane scrollPane = new JScrollPane(variablesPanel);
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.add(scrollPane);
+		panel.setPreferredSize(new Dimension(100, 200));
 		return panel;
 
 	}
@@ -111,10 +74,9 @@ public class VariablesPanel extends JPanel {
 	 * @param name - name of variable
 	 * @param exp  - expression of variable
 	 */
-	private JPanel createEntry(String name, String exp) {
-		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout());
-		JLabel label = new JLabel(name + " = " + exp);
+	private JPanel createEntry(IdentifierToken n, ExpressionTreeNode e) {
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JLabel label = new JLabel(n.getName() + " = " + e.toString());
 		panel.add(label);
 
 //		Remove Button 
@@ -122,15 +84,29 @@ public class VariablesPanel extends JPanel {
 		removeVariableButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				variables.removeVariable(name);
-				variablesPanel.remove(panel);
-				variablesPanel.revalidate();
-				variablesPanel.repaint();
+				variables.removeVariable(n);
+				refresh();
 			};
 		});
 
 		panel.add(removeVariableButton);
 		return panel;
+	}
+
+	@Override
+	public void setSize(Dimension size) {
+		setPreferredSize(size);
+		setMinimumSize(size);
+		super.setSize(size);
+	}
+
+	public void refresh() {
+		variablesPanel.removeAll();
+		for (Entry<IdentifierToken, ExpressionTreeNode> e : variables.getAll()) {
+			variablesPanel.add(createEntry(e.getKey(), e.getValue()));
+		}
+		this.revalidate();
+		this.repaint();
 	}
 
 }

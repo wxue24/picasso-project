@@ -30,13 +30,17 @@ public class Frame extends JFrame {
 		// create input field
 		InputPanel input = new InputPanel();
 
+		// create expression history panel
+		ExpressionHistoryPanel expressionHistoryPanel = new ExpressionHistoryPanel(input);
+
 		// create variables panel
-		VariablesPanel variablesPanel = new VariablesPanel();
+		VariablesPanel variablesPanel = new VariablesPanel(expressionHistoryPanel);
 
 		// add commands to test here
 		ButtonPanel commands = new ButtonPanel(canvas);
 		commands.add("Open", new Reader());
-		commands.add("Evaluate", new ThreadedCommand<Pixmap>(canvas, new Evaluater(input)));
+		commands.add("Evaluate",
+				new ThreadedCommand<Pixmap>(canvas, new Evaluater(input, expressionHistoryPanel, variablesPanel)));
 		commands.add("Save", new Writer(input));
 
 		// add panel to hold commands, input, and canvas
