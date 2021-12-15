@@ -286,7 +286,14 @@ public class EvaluatorTests {
 
 	@Test
 	public void testImageWrapEvaluation() {
-		ImageWrap myTree = new ImageWrap("floorx.jpg", new X(), new Y());
+		ImageWrap myTree = new ImageWrap("testimage.jpg", new X(), new Y());
+		assertEquals(new RGBColor(0.41960784313725497, 0.41960784313725497, 0.41960784313725497),
+				myTree.evaluate(.4, -1));
+		assertEquals(new RGBColor(1.0, 1.0, 1.0), myTree.evaluate(4.999, -1));
+		assertEquals(new RGBColor(-0.8509803921568627, -0.8509803921568627, -0.8509803921568627),
+				myTree.evaluate(-4.7, -1));
+
+		myTree = new ImageWrap("floorx.jpg", new X(), new Y());
 		assertEquals(new RGBColor(-1, -1, -1), myTree.evaluate(-1, 0));
 
 		myTree = new ImageWrap("floorx.jpg", new Addition(new X(), new X()), new Addition(new Y(), new Y()));

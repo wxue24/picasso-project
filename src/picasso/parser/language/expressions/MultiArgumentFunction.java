@@ -39,7 +39,7 @@ public abstract class MultiArgumentFunction extends ExpressionTreeNode {
 			sparams = sparams + "," + params.get(i).toString();
 		}
 		String classname = this.getClass().getName();
-		return classname.substring(classname.lastIndexOf(".")) + "(" + sparams + ")";
+		return classname.substring(classname.lastIndexOf(".") + 1) + "(" + sparams + ")";
 	}
 
 	@Override

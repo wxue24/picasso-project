@@ -19,6 +19,7 @@ public abstract class UnaryFunction extends ExpressionTreeNode {
 	 */
 	public UnaryFunction(ExpressionTreeNode param) {
 		this.param = param;
+
 	}
 	
 	/**
@@ -44,7 +45,7 @@ public abstract class UnaryFunction extends ExpressionTreeNode {
 	@Override
 	public String toString() {
 		String classname = this.getClass().getName();
-		return classname.substring(classname.lastIndexOf(".")) + "(" + param + ")";
+		return classname.substring(classname.lastIndexOf(".") + 1) + "(" + param + ")";
 	}
 
 	@Override
