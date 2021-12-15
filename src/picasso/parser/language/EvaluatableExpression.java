@@ -11,4 +11,6 @@ import picasso.parser.language.expressions.RGBColor;
 public interface EvaluatableExpression {
 	public RGBColor evaluate(double x, double y);
 
+	// RGBColor evaluate(RGBColor left, RGBColor right);
+
 }

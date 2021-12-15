@@ -5,10 +5,19 @@ import java.util.List;
 import java.util.Stack;
 
 import picasso.parser.language.ExpressionTreeNode;
-import picasso.parser.tokens.*;
-import picasso.parser.tokens.chars.*;
-import picasso.parser.tokens.functions.*;
-import picasso.parser.tokens.operations.*;
+import picasso.parser.tokens.CharTokenFactory;
+import picasso.parser.tokens.ColorToken;
+import picasso.parser.tokens.IdentifierToken;
+import picasso.parser.tokens.NumberToken;
+import picasso.parser.tokens.StringToken;
+import picasso.parser.tokens.Token;
+import picasso.parser.tokens.chars.CommaToken;
+import picasso.parser.tokens.chars.LeftParenToken;
+import picasso.parser.tokens.chars.RightParenToken;
+import picasso.parser.tokens.functions.FunctionToken;
+import picasso.parser.tokens.operations.EqualsToken;
+import picasso.parser.tokens.operations.OperationInterface;
+import picasso.parser.tokens.operations.PlusToken;
 
 /**
  * Parses a string into an expression tree based on rules for arithmetic.
@@ -28,39 +37,37 @@ public class ExpressionTreeGenerator {
 	/**
 	 * Converts the given string into expression tree for easier manipulation.
 	 * 
-	 * @param infix
-	 *            - a non-empty expression to parse.
+	 * @param infix - a non-empty expression to parse.
 	 * 
 	 * @return ExpressionTreeNode representing the root node of the given infix
 	 *         formula
 	 */
-	public ExpressionTreeNode makeExpression(String infix) throws IllegalArgumentException {
-		try {
-			Stack<Token> postfix = infixToPostfix(infix);
+	public ExpressionTreeNode makeExpression(String infix) throws ParseException {
 
-			if (postfix.isEmpty()) {
-				return null;
-			}
-
-			// System.out.println("Process postfix expression");
-			SemanticAnalyzer semAnalyzer = SemanticAnalyzer.getInstance();
-
-			ExpressionTreeNode root = semAnalyzer.generateExpressionTree(postfix);
-
-			// Is this the best place to put this check?
-			if (!postfix.isEmpty()) {
-				throw new ParseException(
-						"Extra operands without operators or functions");
-			}
-			return root;
-		} catch (Exception e) {
-			throw new IllegalArgumentException("Unable to generate expression tree", e);
+		Stack<Token> postfix = infixToPostfix(infix);
+		if (postfix.isEmpty()) {
+			return null;
 		}
+
+		// System.out.println("Process postfix expression");
+		SemanticAnalyzer semAnalyzer = SemanticAnalyzer.getInstance();
+
+		ExpressionTreeNode root = semAnalyzer.generateExpressionTree(postfix);
+
+		// Is this the best place to put this check?
+		if (!postfix.isEmpty()) {
+			throw new ParseException("Extra operands without operators or functions");
+		}
+		if (root == null) {
+			throw new ParseException("Unable to generate expression tree");
+		}
+		return root;
+
 	}
 
 	/**
-	 * This method converts the String infix expression to a Stack of tokens,
-	 * which are in postfix.
+	 * This method converts the String infix expression to a Stack of tokens, which
+	 * are in postfix.
 	 * 
 	 * @param infix
 	 * @return a stack of tokens, in postfix order
@@ -92,25 +99,25 @@ public class ExpressionTreeGenerator {
 				postfixResult.push(token);
 			} else if (token instanceof IdentifierToken) {
 				postfixResult.push(token);
+			} else if (token instanceof StringToken) {
+				postfixResult.push(token);
 			} else if (token instanceof FunctionToken) {
 				operators.push(token);
 			} else if (token instanceof OperationInterface) {
 
 				/*
-				 * while there is an operator, o2, at the top of the stack (this
-				 * excludes left parenthesis), and either
+				 * while there is an operator, o2, at the top of the stack (this excludes left
+				 * parenthesis), and either
 				 * 
-				 * o1 is left-associative and its precedence is less than (lower
-				 * precedence) or equal to that of o2, or o1 is
-				 * right-associative and its precedence is less than (lower
-				 * precedence) that of o2 (SS: second case is not reflected in below code),
+				 * o1 is left-associative and its precedence is less than (lower precedence) or
+				 * equal to that of o2, or o1 is right-associative and its precedence is less
+				 * than (lower precedence) that of o2 (SS: second case is not reflected in below
+				 * code),
 				 * 
 				 * pop o2 off the stack, onto the output queue;
 				 */
-				while (!operators.isEmpty()
-						&& !(operators.peek() instanceof LeftParenToken)
-						&& orderOfOperation(token) <= orderOfOperation(operators
-								.peek())) {
+				while (!operators.isEmpty() && !(operators.peek() instanceof LeftParenToken)
+						&& orderOfOperation(token) <= orderOfOperation(operators.peek())) {
 					postfixResult.push(operators.pop());
 				}
 
@@ -121,15 +128,13 @@ public class ExpressionTreeGenerator {
 				// parenthesis, pop operators off the stack onto the output
 				// queue.
 
-				while (!operators.isEmpty()
-						&& !(operators.peek() instanceof LeftParenToken)) {
+				while (!operators.isEmpty() && !(operators.peek() instanceof LeftParenToken)) {
 					postfixResult.push(operators.pop());
 				}
 
 				// If no left parentheses are encountered, either the
 				// separator was misplaced or parentheses were mismatched.
-				if (operators.isEmpty()
-						|| !(operators.peek() instanceof LeftParenToken)) {
+				if (operators.isEmpty() || !(operators.peek() instanceof LeftParenToken)) {
 					throw new ParseException("Parentheses were mismatched.");
 				}
 
@@ -139,8 +144,7 @@ public class ExpressionTreeGenerator {
 				// Until the token at the top of the stack is a left
 				// parenthesis, pop operators off the stack onto the output
 				// queue.
-				while (operators.size() > 0
-						&& !(operators.peek() instanceof LeftParenToken)) {
+				while (operators.size() > 0 && !(operators.peek() instanceof LeftParenToken)) {
 					postfixResult.push(operators.pop());
 				}
 
@@ -153,32 +157,50 @@ public class ExpressionTreeGenerator {
 
 				// If the token at the top of the stack is a function token, pop
 				// it onto the output queue.
-				if (operators.size() > 0
-						&& operators.peek() instanceof FunctionToken) {
+				if (operators.size() > 0 && operators.peek() instanceof FunctionToken) {
 					postfixResult.push(operators.pop());
 				}
 
+			} else if (token instanceof EqualsToken) {
+
+				// Should only be variable name in postfixresult
+				// and nothing in operators
+				Token t = postfixResult.peek();
+				if (!operators.empty()) {
+					throw new ParseException("Variable name can only be letters");
+				} else if (postfixResult.size() != 1) {
+					throw new ParseException("Variable name can only be letters");
+				} else if (!(t instanceof IdentifierToken)) {
+					throw new ParseException("Variable name can only be letters");
+				} else {
+					String name = ((IdentifierToken) t).getName();
+					if (name.equals("x") || name.equals("y")) {
+						throw new ParseException("Variable name cannot be 'x' or 'y'");
+					}
+					operators.push(token);
+				}
 			} else {
+
 				System.out.println("ERROR: No match: " + token);
 			}
 			// System.out.println("Postfix: " + postfixResult);
 		}
 
-		while (!operators.isEmpty()) {
+		while (!operators.isEmpty())
+
+		{
 
 			// If the operator token on the top of the stack is a parenthesis,
 			// then there are mismatched parentheses.
 
 			Token top = operators.peek();
 
-			if (top.equals(CharTokenFactory.getToken('('))
-					|| top.equals(CharTokenFactory.getToken(')'))) {
+			if (top.equals(CharTokenFactory.getToken('(')) || top.equals(CharTokenFactory.getToken(')'))) {
 				throw new ParseException("Mismatched Parentheses");
 			}
 			postfixResult.push(operators.pop());
 		}
 
-		// System.out.println(postfixResult);
 		return postfixResult;
 	}
 

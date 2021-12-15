@@ -47,6 +47,14 @@ public class Pixmap {
 	public Pixmap() {
 		this(DEFAULT_SIZE.width, DEFAULT_SIZE.height, DEFAULT_COLOR);
 	}
+	/**
+	 * 
+	 * @param image
+	 * @return image
+	 */
+	public static BufferedImage getImage(Pixmap image) {
+		return image.myImage;
+	}
 
 	/**
 	 * Create a black pixmap with given size
@@ -214,4 +222,6 @@ public class Pixmap {
 		result.setRGB(0, 0, from.width, from.height, data, 0, from.width);
 		return result;
 	}
+	
+	
 }

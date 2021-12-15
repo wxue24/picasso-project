@@ -3,7 +3,7 @@ package picasso.parser;
 import java.util.Stack;
 
 import picasso.parser.language.ExpressionTreeNode;
-import picasso.parser.language.expressions.Addition;
+import picasso.parser.language.expressions.BinaryOperators.Addition;
 import picasso.parser.tokens.Token;
 
 /**

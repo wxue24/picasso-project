@@ -11,7 +11,7 @@ import picasso.parser.language.ExpressionTreeNode;
  */
 public abstract class UnaryFunction extends ExpressionTreeNode {
 
-	ExpressionTreeNode param;
+	protected ExpressionTreeNode param;
 
 	/**
 	 * 
@@ -19,7 +19,22 @@ public abstract class UnaryFunction extends ExpressionTreeNode {
 	 */
 	public UnaryFunction(ExpressionTreeNode param) {
 		this.param = param;
+
 	}
+	
+	/**
+	public 
+	@Override
+	public RGBColor evaluate(double x, double y) {
+		// call method 
+		if {
+			
+		}
+		else {
+			//real current evaluate method
+		}
+	}
+	*/
 
 	/**
 	 * Returns the string representation of the function in the format "<ClassName>:
@@ -30,7 +45,7 @@ public abstract class UnaryFunction extends ExpressionTreeNode {
 	@Override
 	public String toString() {
 		String classname = this.getClass().getName();
-		return classname.substring(classname.lastIndexOf(".")) + "(" + param + ")";
+		return classname.substring(classname.lastIndexOf(".") + 1) + "(" + param + ")";
 	}
 
 	@Override

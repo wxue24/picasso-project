@@ -1,10 +1,14 @@
- package picasso.parser;
+package picasso.parser;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Stack;
 
 import picasso.parser.language.BuiltinFunctionsReader;
 import picasso.parser.language.ExpressionTreeNode;
@@ -146,6 +150,7 @@ public class SemanticAnalyzer implements SemanticAnalyzerInterface {
 	 * @param tokens in postfix order
 	 * @return the root node of the expression tree.
 	 */
+	@Override
 	public ExpressionTreeNode generateExpressionTree(Stack<Token> tokens) {
 
 		if (tokens.isEmpty()) {
