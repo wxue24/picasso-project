@@ -15,6 +15,7 @@ import picasso.parser.tokens.chars.CommaToken;
 import picasso.parser.tokens.chars.LeftParenToken;
 import picasso.parser.tokens.chars.RightParenToken;
 import picasso.parser.tokens.functions.FunctionToken;
+import picasso.parser.tokens.operations.EqualsToken;
 import picasso.parser.tokens.operations.OperationInterface;
 import picasso.parser.tokens.operations.PlusToken;
 
@@ -44,7 +45,6 @@ public class ExpressionTreeGenerator {
 	public ExpressionTreeNode makeExpression(String infix) throws ParseException {
 
 		Stack<Token> postfix = infixToPostfix(infix);
-
 		if (postfix.isEmpty()) {
 			return null;
 		}
@@ -161,13 +161,34 @@ public class ExpressionTreeGenerator {
 					postfixResult.push(operators.pop());
 				}
 
+			} else if (token instanceof EqualsToken) {
+
+				// Should only be variable name in postfixresult
+				// and nothing in operators
+				Token t = postfixResult.peek();
+				if (!operators.empty()) {
+					throw new ParseException("Variable name can only be letters");
+				} else if (postfixResult.size() != 1) {
+					throw new ParseException("Variable name can only be letters");
+				} else if (!(t instanceof IdentifierToken)) {
+					throw new ParseException("Variable name can only be letters");
+				} else {
+					String name = ((IdentifierToken) t).getName();
+					if (name.equals("x") || name.equals("y")) {
+						throw new ParseException("Variable name cannot be 'x' or 'y'");
+					}
+					operators.push(token);
+				}
 			} else {
+
 				System.out.println("ERROR: No match: " + token);
 			}
 			// System.out.println("Postfix: " + postfixResult);
 		}
 
-		while (!operators.isEmpty()) {
+		while (!operators.isEmpty())
+
+		{
 
 			// If the operator token on the top of the stack is a parenthesis,
 			// then there are mismatched parentheses.
@@ -180,7 +201,6 @@ public class ExpressionTreeGenerator {
 			postfixResult.push(operators.pop());
 		}
 
-		// System.out.println(postfixResult);
 		return postfixResult;
 	}
 

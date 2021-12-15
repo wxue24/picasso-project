@@ -8,7 +8,9 @@ import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.util.Command;
 import picasso.view.ErrorWindow;
+import picasso.view.ExpressionHistoryPanel;
 import picasso.view.InputPanel;
+import picasso.view.VariablesPanel;
 
 /**
  * Evaluate an expression for each pixel in a image.
@@ -20,9 +22,13 @@ public class Evaluater implements Command<Pixmap> {
 	public static final double DOMAIN_MIN = -1;
 	public static final double DOMAIN_MAX = 1;
 	private InputPanel input;
+	private ExpressionHistoryPanel exphist;
+	private VariablesPanel vpanel;
 
-	public Evaluater(InputPanel input) {
+	public Evaluater(InputPanel input, ExpressionHistoryPanel exphist, VariablesPanel vpanel) {
 		this.input = input;
+		this.exphist = exphist;
+		this.vpanel = vpanel;
 	}
 
 	/**
@@ -30,17 +36,28 @@ public class Evaluater implements Command<Pixmap> {
 	 */
 	@Override
 	public void execute(Pixmap target) {
-		// create the expression to evaluate just once
-		ExpressionTreeNode expr = createExpression();
-		// evaluate it for each pixel
-		Dimension size = target.getSize();
-		for (int imageY = 0; imageY < size.height; imageY++) {
-			double evalY = imageToDomainScale(imageY, size.height);
-			for (int imageX = 0; imageX < size.width; imageX++) {
-				double evalX = imageToDomainScale(imageX, size.width);
-				Color pixelColor = expr.evaluate(evalX, evalY).toJavaColor();
-				target.setColor(imageX, imageY, pixelColor);
+		try {
+			// create the expression to evaluate just once
+			ExpressionTreeNode expr = createExpression();
+			if (expr == null) {
+				ErrorWindow.getInstance().showError("Can't evaluate empty expressions");
+			} else {
+				// Update variables panel
+				vpanel.refresh();
+				exphist.refresh();
+				// evaluate it for each pixel
+				Dimension size = target.getSize();
+				for (int imageY = 0; imageY < size.height; imageY++) {
+					double evalY = imageToDomainScale(imageY, size.height);
+					for (int imageX = 0; imageX < size.width; imageX++) {
+						double evalX = imageToDomainScale(imageX, size.width);
+						Color pixelColor = expr.evaluate(evalX, evalY).toJavaColor();
+						target.setColor(imageX, imageY, pixelColor);
+					}
+				}
 			}
+		} catch (Exception e) {
+			ErrorWindow.getInstance().showError(e.getMessage());
 		}
 	}
 
@@ -61,39 +78,18 @@ public class Evaluater implements Command<Pixmap> {
 		// generate expression trees from strings, or you can create expression
 		// objects directly (as in the commented statement below).
 
-		// String test = "floor(y)";
-//		String test = "ceil(y)";
-		// String test = "floor(y)";
-//		String test = "abs(y)";
-		// String test = "x + y";
-		try {
-			String test = input.getText();
+		String text = input.getText();
 
-			ExpressionTreeGenerator expTreeGen = new ExpressionTreeGenerator();
+		// Add to history
+		exphist.addExpression(text);
 
-			ExpressionTreeNode node = expTreeGen.makeExpression(test);
-			if (node != null)
-				return node;
-			else
-				return handleCreateExpressionError();
-		} catch (Exception e) {
-			ErrorWindow.getInstance().showError(e.getMessage());
-			return null;
-		}
-		// return new Multiply( new X(), new Y() );
-
-	}
-
-	/**
-	 * Shows any errors when generating the expression tree in an error window
-	 * 
-	 * @return Expression tree node for black canvas
-	 */
-	private ExpressionTreeNode handleCreateExpressionError() {
 		ExpressionTreeGenerator expTreeGen = new ExpressionTreeGenerator();
-		ErrorWindow.getInstance().showError("Unable to create image from input");
-		// Set canvas to black
-		return expTreeGen.makeExpression("-1");
+
+		ExpressionTreeNode node = expTreeGen.makeExpression(text);
+		if (node != null)
+			return node;
+		return null;
+
 	}
 
 }

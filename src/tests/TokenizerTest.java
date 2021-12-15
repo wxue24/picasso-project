@@ -32,6 +32,7 @@ import picasso.parser.tokens.functions.LogToken;
 import picasso.parser.tokens.functions.SinToken;
 import picasso.parser.tokens.functions.TanToken;
 import picasso.parser.tokens.functions.WrapToken;
+import picasso.parser.tokens.operations.EqualsToken;
 import picasso.parser.tokens.operations.PlusToken;
 
 public class TokenizerTest {
@@ -219,24 +220,18 @@ public class TokenizerTest {
 
 	@Test
 	public void testTokenizeVariables() {
-		Variables.getInstance().addVariable("a = floor(x)");
-		tokens = Variables.getInstance().getVariable("a");
-		assertEquals(new FloorToken(), tokens.get(0));
-		assertEquals(new LeftParenToken(), tokens.get(1));
-		assertEquals(new IdentifierToken("x"), tokens.get(2));
-		assertEquals(new RightParenToken(), tokens.get(3));
+		String expression = "a = floor(x)";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new IdentifierToken("a"), tokens.get(0));
+		assertEquals(new EqualsToken(), tokens.get(1));
+		assertEquals(new FloorToken(), tokens.get(2));
+		assertEquals(new LeftParenToken(), tokens.get(3));
+		assertEquals(new IdentifierToken("x"), tokens.get(4));
+		assertEquals(new RightParenToken(), tokens.get(5));
 
 		tokens = tokenizer.parseTokens("a");
-		assertEquals(new FloorToken(), tokens.get(0));
-		assertEquals(new LeftParenToken(), tokens.get(1));
-		assertEquals(new IdentifierToken("x"), tokens.get(2));
-		assertEquals(new RightParenToken(), tokens.get(3));
+		assertEquals(new IdentifierToken("a"), tokens.get(0));
 
-		tokens = tokenizer.parseTokens("tan(x)");
-		assertEquals(new TanToken(), tokens.get(0));
-		assertEquals(new LeftParenToken(), tokens.get(1));
-		assertEquals(new IdentifierToken("x"), tokens.get(2));
-		assertEquals(new RightParenToken(), tokens.get(3));
 	}
 
 	@Test
