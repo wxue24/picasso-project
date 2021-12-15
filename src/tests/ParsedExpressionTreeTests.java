@@ -9,7 +9,6 @@ import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.Variables;
 import picasso.parser.language.expressions.RGBColor;
-import picasso.parser.language.expressions.Random;
 import picasso.parser.language.expressions.X;
 import picasso.parser.language.expressions.Y;
 import picasso.parser.language.expressions.BinaryOperators.Addition;
