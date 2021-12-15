@@ -20,6 +20,8 @@ evaluate to colors and then eventually to images.
     * Floor
     * Ceil
     * Wrap
+    * Atan
+    * Clamp
     
 * Multi-Argument Functions
     * Imagewrap

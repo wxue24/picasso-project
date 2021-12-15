@@ -28,4 +28,7 @@ public class Reader extends FileCommand<Pixmap> {
 			target.read(fileName);
 		}
 	}
+	
+	
+	
 }

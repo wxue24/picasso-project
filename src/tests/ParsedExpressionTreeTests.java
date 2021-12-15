@@ -8,15 +8,23 @@ import org.junit.jupiter.api.Test;
 import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.Variables;
-import picasso.parser.language.expressions.Imagewrap;
 import picasso.parser.language.expressions.RGBColor;
+import picasso.parser.language.expressions.Random;
 import picasso.parser.language.expressions.X;
 import picasso.parser.language.expressions.Y;
 import picasso.parser.language.expressions.BinaryOperators.Addition;
+import picasso.parser.language.expressions.MultiArgumentFunctions.ImageClip;
+import picasso.parser.language.expressions.MultiArgumentFunctions.ImageWrap;
+import picasso.parser.language.expressions.MultiArgumentFunctions.PerlinBW;
+import picasso.parser.language.expressions.MultiArgumentFunctions.PerlinColor;
 import picasso.parser.language.expressions.UnaryFunctions.Abs;
+import picasso.parser.language.expressions.UnaryFunctions.Atan;
 import picasso.parser.language.expressions.UnaryFunctions.Ceil;
+import picasso.parser.language.expressions.UnaryFunctions.Clamp;
 import picasso.parser.language.expressions.UnaryFunctions.Cos;
+import picasso.parser.language.expressions.UnaryFunctions.Exp;
 import picasso.parser.language.expressions.UnaryFunctions.Floor;
+import picasso.parser.language.expressions.UnaryFunctions.Log;
 import picasso.parser.language.expressions.UnaryFunctions.Sin;
 import picasso.parser.language.expressions.UnaryFunctions.Tan;
 import picasso.parser.language.expressions.UnaryFunctions.Wrap;
@@ -26,7 +34,7 @@ import picasso.parser.language.expressions.UnaryFunctions.Wrap;
  * compiler errors until some code is created.
  * 
  * @author Sara Sprenkle
- * 
+ *   
  */
 public class ParsedExpressionTreeTests {
 
@@ -141,7 +149,16 @@ public class ParsedExpressionTreeTests {
 		e = parser.makeExpression("wrap ( x + y )");
 		assertEquals(new Wrap(new Addition(new X(), new Y())), e);
 	}
+	
+	@Test
+	public void clampFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("clamp( x )");
+		assertEquals(new Clamp(new X()), e);
 
+		e = parser.makeExpression("clamp ( x + y )");
+		assertEquals(new Clamp(new Addition(new X(), new Y())), e);
+	}
+ 
 	@Test
 	public void variablesExpressionTests() {
 		Variables v = Variables.getInstance();
@@ -151,12 +168,64 @@ public class ParsedExpressionTreeTests {
 		e = parser.makeExpression("a");
 		assertEquals(new Floor(new X()), e);
 
-	}
+	} 
 
 	@Test
 	public void imageWrapFunctionTests() {
-		ExpressionTreeNode e = parser.makeExpression("imagewrap(\"tanx.jpg\", x + x, y)");
-		assertEquals(new Imagewrap("tanx.jpg", new Addition(new X(), new X()), new Y()), e);
+		ExpressionTreeNode e = parser.makeExpression("imageWrap(\"floorx.jpg\", x + x, y)");
+		assertEquals(new ImageWrap("floorx.jpg", new Addition(new X(), new X()), new Y()), e);
+	}
+	
+	@Test
+	public void imageClipFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("imageClip(\"floorx.jpg\", x + x, y)");
+		assertEquals(new ImageClip("floorx.jpg", new Addition(new X(), new X()), new Y()), e);
+	}
+	
+	@Test
+	public void perlinColorFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("perlinColor(x, y)");
+		assertEquals(new PerlinColor(new X(), new Y()), e);
+		
+		e = parser.makeExpression("perlinColor(x, x+x)");
+		assertEquals(new PerlinColor(new X(), new Addition(new X(), new X())), e);
+	}
+	
+	@Test
+	public void perlinBWFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("perlinBW(x, y)");
+		assertEquals(new PerlinBW(new X(), new Y()), e);
+		
+		e = parser.makeExpression("perlinBW(x, x+x)");
+		assertEquals(new PerlinBW(new X(), new Addition(new X(), new X())), e);
+	}
+	
+	@Test
+	public void atanFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("atan( x )");
+		assertEquals(new Atan(new X()), e);
+
+		e = parser.makeExpression("atan( x + y )");
+		assertEquals(new Atan(new Addition(new X(), new Y())), e);
+
 	}
 
+	@Test
+	public void expFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("exp( x )");
+		assertEquals(new Exp(new X()), e);
+
+		e = parser.makeExpression("exp( x + y )");
+		assertEquals(new Exp(new Addition(new X(), new Y())), e);
+
+	}
+
+	@Test
+	public void logFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("log( x )");
+		assertEquals(new Log(new X()), e);
+
+		e = parser.makeExpression("log( x + y )");
+		assertEquals(new Log(new Addition(new X(), new Y())), e);
+	}
 }
