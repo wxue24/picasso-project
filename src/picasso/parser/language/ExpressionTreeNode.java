@@ -3,6 +3,7 @@ package picasso.parser.language;
 import java.util.Map;
 import java.util.TreeMap;
 
+import picasso.model.Pixmap;
 import picasso.parser.language.expressions.RGBColor;
 
 /**
@@ -22,9 +23,10 @@ public abstract class ExpressionTreeNode implements EvaluatableExpression {
 	 * 
 	 * @return the result of evaluating the expression
 	 */
+	@Override
 	public abstract RGBColor evaluate(double x, double y);
 
 	// TODO: Not being utilized yet. Why would it be useful?
 	// keep a mapping of the element to its value.
-	static protected Map<ExpressionTreeNode, Object> gelementsToValue = new TreeMap<ExpressionTreeNode, Object>();
+	static protected Map<ExpressionTreeNode, Pixmap> gelementsToValue = new TreeMap<ExpressionTreeNode, Pixmap>();
 }

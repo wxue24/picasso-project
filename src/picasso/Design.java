@@ -1,6 +1,5 @@
 package picasso;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
@@ -14,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class Design extends JFrame {
@@ -111,10 +111,11 @@ public class Design extends JFrame {
 
 		JPanel panel_5 = new JPanel();
 		panel_4.add(panel_5);
-		panel_5.setLayout(new BorderLayout(0, 0));
+		panel_5.setLayout(null);
 
 		JPanel panel_6 = new JPanel();
-		panel_5.add(panel_6, BorderLayout.WEST);
+		panel_6.setBounds(0, 0, 169, 195);
+		panel_5.add(panel_6);
 		panel_6.setLayout(new BoxLayout(panel_6, BoxLayout.PAGE_AXIS));
 
 		JPanel panel_6_2 = new JPanel();
@@ -177,6 +178,27 @@ public class Design extends JFrame {
 
 		JButton btnNewButton_4_2_6 = new JButton("Remove");
 		panel_6_2_6.add(btnNewButton_4_2_6);
+
+		JPanel panel_8 = new JPanel();
+		panel_4.add(panel_8);
+		panel_8.setLayout(null);
+
+		JPanel panel_9 = new JPanel();
+		panel_9.setBounds(14, 5, 109, 42);
+		panel_8.add(panel_9);
+		panel_9.setLayout(new BoxLayout(panel_9, BoxLayout.Y_AXIS));
+
+		JLabel lblNewLabel_2 = new JLabel("History");
+		lblNewLabel_2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel_9.add(lblNewLabel_2);
+
+		JPanel panel_6_2_1 = new JPanel();
+		panel_9.add(panel_6_2_1);
+		panel_6_2_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+
+		JLabel lblNewLabel_3 = new JLabel("x");
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel_6_2_1.add(lblNewLabel_3);
 	}
 
 }

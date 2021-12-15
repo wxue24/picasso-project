@@ -9,7 +9,6 @@ import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.Variables;
 import picasso.parser.language.expressions.RGBColor;
-import picasso.parser.language.expressions.Random;
 import picasso.parser.language.expressions.X;
 import picasso.parser.language.expressions.Y;
 import picasso.parser.language.expressions.BinaryOperators.Addition;
@@ -170,9 +169,12 @@ public class ParsedExpressionTreeTests {
  
 	@Test
 	public void variablesExpressionTests() {
-		Variables.getInstance().addVariable("c = floor(x)");
-		ExpressionTreeNode e = parser.makeExpression("c + [1,0,0]");
-		assertEquals(new Addition(new Floor(new X()), new RGBColor(1, 0, 0)), e);
+		Variables v = Variables.getInstance();
+		ExpressionTreeNode e = parser.makeExpression("a = floor(x)");
+		assertEquals(new Floor(new X()), e);
+
+		e = parser.makeExpression("a");
+		assertEquals(new Floor(new X()), e);
 
 	} 
 
@@ -316,3 +318,6 @@ public class ParsedExpressionTreeTests {
 	}
 
 }
+
+
+

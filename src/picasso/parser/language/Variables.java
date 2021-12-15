@@ -4,11 +4,11 @@
 package picasso.parser.language;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
-import picasso.parser.Tokenizer;
-import picasso.parser.tokens.Token;
+import picasso.parser.tokens.IdentifierToken;
 
 /**
  * Represents the variables
@@ -18,8 +18,7 @@ import picasso.parser.tokens.Token;
  */
 public class Variables {
 
-	private Map<String, List<Token>> variablesMapping;
-	private Map<String, String> variablesMappingString;
+	private Map<IdentifierToken, ExpressionTreeNode> variables;
 	private static Variables ourInstance;
 
 	/**
@@ -35,38 +34,21 @@ public class Variables {
 	}
 
 	private Variables() {
-		variablesMapping = new HashMap<>();
-		variablesMappingString = new HashMap<>();
-	}
-
-	/**
-	 * 
-	 * @return the variables in a map of String
-	 */
-	public Map<String, String> getVariablesMapping() {
-		return variablesMappingString;
+		variables = new HashMap<>();
 	}
 
 	/**
 	 * Adds variable
 	 * 
-	 * @param input contains variable name on right hand side and expression on left
-	 *              hand side, separated by '=' in between
-	 * @return String array with index at 0 as the key, and index at 1 as the
-	 *         expression
+	 * 
 	 */
-	public String[] addVariable(String input) {
-		// parses input
-		String[] v = parse(input);
-
-		// tokenizes expression
-		Tokenizer tokenizer = new Tokenizer();
-		List<Token> exp = tokenizer.parseTokens(v[1]);
-
-		// adds to mappings
-		variablesMapping.put(v[0], exp);
-		variablesMappingString.put(v[0], v[1]);
-		return v;
+	public void addVariable(IdentifierToken t, ExpressionTreeNode e) {
+		for (Entry<IdentifierToken, ExpressionTreeNode> entry : getAll()) {
+			if (entry.getKey().getName().equals(t.getName())) {
+				variables.remove(entry.getKey());
+			}
+		}
+		variables.put(t, e);
 	}
 
 	/**
@@ -75,8 +57,17 @@ public class Variables {
 	 * @param key
 	 * @return expression as a stack of tokens
 	 */
-	public List<Token> getVariable(String key) {
-		return variablesMapping.get(key);
+	public ExpressionTreeNode getVariable(IdentifierToken t) {
+		for (Entry<IdentifierToken, ExpressionTreeNode> entry : getAll()) {
+			if (entry.getKey().getName().equals(t.getName())) {
+				return variables.get(entry.getKey());
+			}
+		}
+		return null;
+	}
+
+	public Set<Entry<IdentifierToken, ExpressionTreeNode>> getAll() {
+		return variables.entrySet();
 	}
 
 	/**
@@ -84,44 +75,19 @@ public class Variables {
 	 * 
 	 * @param key - variable name
 	 */
-	public void removeVariable(String key) {
-		variablesMapping.remove(key);
-		variablesMappingString.remove(key);
+	public void removeVariable(IdentifierToken t) {
+		for (Entry<IdentifierToken, ExpressionTreeNode> entry : getAll()) {
+			if (entry.getKey().getName().equals(t.getName())) {
+				variables.remove(entry.getKey());
+			}
+		}
 	}
 
 	/**
 	 * Removes all variables
 	 */
 	public void removeAll() {
-		variablesMapping = new HashMap<>();
-		variablesMappingString = new HashMap<>();
-	}
-
-	/**
-	 * Parses the new variable into its name and expression, and checks for any
-	 * errors. Valid variable names should be letters or words that aren't x or y or
-	 * function names
-	 * 
-	 * @param input - new variable that user adds
-	 * @return array of String with first value being variable name, and second
-	 *         being expression
-	 * @throws IllegalArgumentException if input is not a valid expression
-	 */
-	public String[] parse(String input) throws IllegalArgumentException {
-		int index = input.indexOf('=');
-		if (index < 0) {
-			throw new IllegalArgumentException("Please include '=' when assigning a variable");
-		} else {
-			String key = input.substring(0, index).replaceAll(" ", "");
-			String val = input.substring(index + 1, input.length()).replaceAll(" ", "");
-
-			if (BuiltinFunctionsReader.getFunctionsList().contains(key)) {
-				throw new IllegalArgumentException("Can't use function names for variables");
-			} else if (key.toLowerCase().equals("x") || key.toLowerCase().equals("y")) {
-				throw new IllegalArgumentException("Can't use 'x' or 'y' for variables");
-			} else
-				return new String[] { key, val };
-		}
+		variables = new HashMap<>();
 	}
 
 }

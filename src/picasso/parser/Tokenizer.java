@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import picasso.parser.language.CharConstants;
-import picasso.parser.language.Variables;
 import picasso.parser.tokens.EOFToken;
-import picasso.parser.tokens.IdentifierToken;
 import picasso.parser.tokens.Token;
 import picasso.parser.tokens.TokenFactory;
 
@@ -69,30 +67,15 @@ public class Tokenizer {
 		Token result = nextToken();
 
 		while (true) {
-			if (EOFToken.getInstance().equals(result))
+
+			if (EOFToken.getInstance().equals(result)) {
 				break;
-
-			tokens.add(result);
-			if (result instanceof IdentifierToken) {
-				// Check if token is a variable
-				String identifierName = ((IdentifierToken) result).getName();
-				if (!identifierName.equals("x") && !identifierName.equals("y")) {
-					// Pop off variable and substitute with expression
-					tokens.remove(tokens.size() - 1);
-					List<Token> expression = Variables.getInstance().getVariable(((IdentifierToken) result).getName());
-					if (expression == null) {
-						throw new ParseException("Variable not defined");
-					}
-					for (Token t : expression) {
-						tokens.add(t);
-					}
-				}
 			}
-
+			tokens.add(result);
 			result = nextToken();
 		}
 
-		// System.out.println("Tokens: " + tokens);
+//		System.out.println("Tokens: " + tokens);
 		return tokens;
 	}
 
