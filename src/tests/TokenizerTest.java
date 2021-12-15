@@ -1,7 +1,6 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
@@ -27,8 +26,12 @@ import picasso.parser.tokens.functions.ClampToken;
 import picasso.parser.tokens.functions.CosToken;
 import picasso.parser.tokens.functions.ExpToken;
 import picasso.parser.tokens.functions.FloorToken;
-import picasso.parser.tokens.functions.ImagewrapToken;
+import picasso.parser.tokens.functions.ImageClipToken;
+import picasso.parser.tokens.functions.ImageWrapToken;
 import picasso.parser.tokens.functions.LogToken;
+import picasso.parser.tokens.functions.PerlinBWToken;
+import picasso.parser.tokens.functions.PerlinColorToken;
+import picasso.parser.tokens.functions.RandomToken;
 import picasso.parser.tokens.functions.SinToken;
 import picasso.parser.tokens.functions.TanToken;
 import picasso.parser.tokens.functions.WrapToken;
@@ -136,7 +139,7 @@ public class TokenizerTest {
 		assertEquals(new LeftParenToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
-		
+
 		expression = "atan(x)";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new AtanToken(), tokens.get(0));
@@ -178,7 +181,7 @@ public class TokenizerTest {
 		assertEquals(new LeftParenToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
-		
+
 		expression = "log(x)";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new LogToken(), tokens.get(0));
@@ -186,7 +189,6 @@ public class TokenizerTest {
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
 
-		
 		expression = "clamp(x)";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new ClampToken(), tokens.get(0));
@@ -194,8 +196,6 @@ public class TokenizerTest {
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
 	}
-	
-	
 
 	@Test
 	public void testTokenizeCombinedFunctionExpression() {
@@ -238,7 +238,7 @@ public class TokenizerTest {
 	public void testTokenizeMultiArgumentFunctionExpression() {
 		String expression = "imageWrap(\"AmoebaMorris.png\", x + x, y)";
 		tokens = tokenizer.parseTokens(expression);
-		assertEquals(new ImagewrapToken(), tokens.get(0));
+		assertEquals(new ImageWrapToken(), tokens.get(0));
 		assertEquals(new LeftParenToken(), tokens.get(1));
 		assertEquals(new StringToken("AmoebaMorris.png"), tokens.get(2));
 		assertEquals(new CommaToken(), tokens.get(3));
@@ -247,8 +247,8 @@ public class TokenizerTest {
 		assertEquals(new IdentifierToken("x"), tokens.get(6));
 		assertEquals(new CommaToken(), tokens.get(7));
 		assertEquals(new IdentifierToken("y"), tokens.get(8));
-		assertEquals(new RightParenToken(), tokens.get(9));   
-		 
+		assertEquals(new RightParenToken(), tokens.get(9));
+
 		expression = "perlinColor(x, y)";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new PerlinColorToken(), tokens.get(0));
@@ -257,7 +257,7 @@ public class TokenizerTest {
 		assertEquals(new CommaToken(), tokens.get(3));
 		assertEquals(new IdentifierToken("y"), tokens.get(4));
 		assertEquals(new RightParenToken(), tokens.get(5));
-		  
+
 		expression = "perlinBW(y, x+x)";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new PerlinBWToken(), tokens.get(0));
@@ -268,7 +268,7 @@ public class TokenizerTest {
 		assertEquals(new PlusToken(), tokens.get(5));
 		assertEquals(new IdentifierToken("x"), tokens.get(6));
 		assertEquals(new RightParenToken(), tokens.get(7));
-		
+
 		expression = "imageClip(\"AmoebaMorris.png\", x + x, y)";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new ImageClipToken(), tokens.get(0));
@@ -280,8 +280,8 @@ public class TokenizerTest {
 		assertEquals(new IdentifierToken("x"), tokens.get(6));
 		assertEquals(new CommaToken(), tokens.get(7));
 		assertEquals(new IdentifierToken("y"), tokens.get(8));
-		assertEquals(new RightParenToken(), tokens.get(9));  
-		
+		assertEquals(new RightParenToken(), tokens.get(9));
+
 		expression = "random()";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new RandomToken(), tokens.get(0));
