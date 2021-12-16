@@ -36,10 +36,8 @@ public class StringFunction extends ExpressionTreeNode{
 		//String projectPath = "images\\";
 //		File file = new File(personalPath + projectPath + filename.getValue() + ".png");
 		File file = new File("images//" + filename.getValue());
-		System.out.println(file.getAbsolutePath());
 		try {
 			myImage = ImageIO.read(new File("images//" + filename.getValue()));
-//			myImage = ImageIO.read(file);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
