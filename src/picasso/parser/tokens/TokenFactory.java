@@ -12,6 +12,7 @@ import picasso.parser.language.BuiltinFunctionsReader;
 import picasso.parser.tokens.chars.CommaToken;
 import picasso.parser.tokens.chars.LeftBracketToken;
 import picasso.parser.tokens.chars.RightBracketToken;
+import picasso.parser.tokens.operations.StringToken;
 
 /**
  * Looks at a generic token and creates the appropriate token type

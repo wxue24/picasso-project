@@ -1,7 +1,9 @@
 +=Plus
+\!=Inverse
 =Equals
 /=Divide
 -=Minus
 *=Multiply
 ^=Exponentiate
 %=Mod
+\"=String

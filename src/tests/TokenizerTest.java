@@ -15,7 +15,6 @@ import picasso.parser.language.Variables;
 import picasso.parser.tokens.ColorToken;
 import picasso.parser.tokens.IdentifierToken;
 import picasso.parser.tokens.NumberToken;
-import picasso.parser.tokens.StringToken;
 import picasso.parser.tokens.Token;
 import picasso.parser.tokens.chars.CommaToken;
 import picasso.parser.tokens.chars.LeftParenToken;
@@ -46,6 +45,7 @@ import picasso.parser.tokens.operations.MultiplyToken;
 import picasso.parser.tokens.operations.EqualsToken;
 import picasso.parser.tokens.operations.ExponentiateToken;
 import picasso.parser.tokens.operations.PlusToken;
+import picasso.parser.tokens.operations.StringToken;
 
 public class TokenizerTest {
 
