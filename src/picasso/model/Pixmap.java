@@ -4,10 +4,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import picasso.parser.ParseException;
+import picasso.view.InputPanel;
 
 /**
  * Class for manipulating graphics images, originally developed in C++.
@@ -189,9 +194,42 @@ public class Pixmap {
 	public void read(String fileName) {
 		try {
 			myFileName = fileName;
-			myImage = ImageIO.read(new File(myFileName));
+			String type = fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length());
+			if (type.equals("png") || type.equals("jpg")) {
+				myImage = ImageIO.read(new File(myFileName));
+
+			} else if (type.equals("exp")) {
+				String s = readFile(fileName);
+				InputPanel.setText(s);
+			} else
+				throw new ParseException("File must be of type 'png','jpg', or 'exp");
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Helper method to read a string from a file
+	 * 
+	 * @param fileName
+	 * @return String
+	 */
+	private String readFile(String fileName) {
+		try {
+			File file = new File(fileName); // creates a new file instance
+			FileReader fr = new FileReader(file); // reads the file
+			BufferedReader br = new BufferedReader(fr); // creates a buffering character input stream
+			StringBuffer sb = new StringBuffer(); // constructs a string buffer with no characters
+			String line;
+			while ((line = br.readLine()) != null) {
+				sb.append(line); // appends line to string buffer
+				sb.append("\n"); // line feed
+			}
+			fr.close(); // closes the stream and release the resources
+			return sb.toString();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "";
 		}
 	}
 
