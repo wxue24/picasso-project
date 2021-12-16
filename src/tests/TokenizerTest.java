@@ -31,9 +31,11 @@ import picasso.parser.tokens.functions.LogToken;
 import picasso.parser.tokens.functions.PerlinBWToken;
 import picasso.parser.tokens.functions.PerlinColorToken;
 import picasso.parser.tokens.functions.RandomToken;
+import picasso.parser.tokens.functions.RgbToYCrCbToken;
 import picasso.parser.tokens.functions.SinToken;
 import picasso.parser.tokens.functions.TanToken;
 import picasso.parser.tokens.functions.WrapToken;
+import picasso.parser.tokens.functions.YCrCbtoRGBToken;
 import picasso.parser.tokens.operations.DivideToken;
 import picasso.parser.tokens.operations.EqualsToken;
 import picasso.parser.tokens.operations.ExponentiateToken;
@@ -197,6 +199,20 @@ public class TokenizerTest {
 		expression = "clamp(x)";
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new ClampToken(), tokens.get(0));
+		assertEquals(new LeftParenToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("x"), tokens.get(2));
+		assertEquals(new RightParenToken(), tokens.get(3));
+
+		expression = "rgbToYCrCb(x)";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new RgbToYCrCbToken(), tokens.get(0));
+		assertEquals(new LeftParenToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("x"), tokens.get(2));
+		assertEquals(new RightParenToken(), tokens.get(3));
+
+		expression = "yCrCbtoRGB(x)";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new YCrCbtoRGBToken(), tokens.get(0));
 		assertEquals(new LeftParenToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
