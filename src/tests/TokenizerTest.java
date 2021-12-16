@@ -1,7 +1,6 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
@@ -27,9 +26,7 @@ import picasso.parser.tokens.functions.CosToken;
 import picasso.parser.tokens.functions.ExpToken;
 import picasso.parser.tokens.functions.FloorToken;
 import picasso.parser.tokens.functions.ImageClipToken;
-
 import picasso.parser.tokens.functions.ImageWrapToken;
-
 import picasso.parser.tokens.functions.LogToken;
 import picasso.parser.tokens.functions.PerlinBWToken;
 import picasso.parser.tokens.functions.PerlinColorToken;
@@ -37,13 +34,12 @@ import picasso.parser.tokens.functions.RandomToken;
 import picasso.parser.tokens.functions.SinToken;
 import picasso.parser.tokens.functions.TanToken;
 import picasso.parser.tokens.functions.WrapToken;
-
 import picasso.parser.tokens.operations.DivideToken;
+import picasso.parser.tokens.operations.EqualsToken;
+import picasso.parser.tokens.operations.ExponentiateToken;
 import picasso.parser.tokens.operations.MinusToken;
 import picasso.parser.tokens.operations.ModToken;
 import picasso.parser.tokens.operations.MultiplyToken;
-import picasso.parser.tokens.operations.EqualsToken;
-import picasso.parser.tokens.operations.ExponentiateToken;
 import picasso.parser.tokens.operations.PlusToken;
 import picasso.parser.tokens.operations.StringToken;
 
@@ -282,12 +278,6 @@ public class TokenizerTest {
 		assertEquals(new CommaToken(), tokens.get(7));
 		assertEquals(new IdentifierToken("y"), tokens.get(8));
 		assertEquals(new RightParenToken(), tokens.get(9));
-		assertEquals(new MinusToken(), tokens.get(10)); 
-		assertEquals(new DivideToken(), tokens.get(11)); 
-		assertEquals(new ExponentiateToken(), tokens.get(12)); 
-		assertEquals(new MultiplyToken(), tokens.get(13));
-		assertEquals(new ModToken(), tokens.get(14));
-				 
 
 		expression = "perlinColor(x, y)";
 		tokens = tokenizer.parseTokens(expression);
@@ -308,11 +298,6 @@ public class TokenizerTest {
 		assertEquals(new PlusToken(), tokens.get(5));
 		assertEquals(new IdentifierToken("x"), tokens.get(6));
 		assertEquals(new RightParenToken(), tokens.get(7));
-		assertEquals(new MinusToken(), tokens.get(8)); 
-		assertEquals(new DivideToken(), tokens.get(9)); 
-		assertEquals(new ExponentiateToken(), tokens.get(10)); 
-		assertEquals(new MultiplyToken(), tokens.get(11));
-		assertEquals(new ModToken(), tokens.get(12));
 
 		expression = "imageClip(\"AmoebaMorris.png\", x + x, y)";
 		tokens = tokenizer.parseTokens(expression);
