@@ -1,6 +1,6 @@
 
 package picasso.parser.language.expressions.BinaryOperators;
-
+import static java.lang.Math.sqrt;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.BinaryOperation;
 import picasso.parser.language.expressions.RGBColor;
@@ -20,9 +20,9 @@ public class Exponentiation extends BinaryOperation {
 		RGBColor l = left.evaluate(x, y);
 		RGBColor r = right.evaluate(x, y);
 		
-		double red = l.getRed() ^ r.getRed();
-		double green = l.getGreen() ^ r.getGreen();
-		double blue = l.getBlue() ^ r.getBlue();
+		double red = Math.pow(l.getRed(), r.getRed());
+		double green = Math.pow(l.getGreen(), r.getGreen());
+		double blue = Math.pow(l.getBlue(), r.getBlue());
 		return new RGBColor(red, green, blue);
 	}
 	
