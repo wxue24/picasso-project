@@ -22,14 +22,16 @@ evaluate to colors and then eventually to images.
     * Wrap
     * Atan
     * Clamp
-    
+ 
 * Multi-Argument Functions
     * Imagewrap
     
 * Binary Operators
     * +
     
-
+* Unary Operator
+    * !
+    
 ### Extensions
 
 * Display the current defined variable names and their values on the right panel

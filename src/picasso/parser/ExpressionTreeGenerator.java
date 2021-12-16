@@ -9,7 +9,6 @@ import picasso.parser.tokens.CharTokenFactory;
 import picasso.parser.tokens.ColorToken;
 import picasso.parser.tokens.IdentifierToken;
 import picasso.parser.tokens.NumberToken;
-import picasso.parser.tokens.StringToken;
 import picasso.parser.tokens.Token;
 import picasso.parser.tokens.chars.CommaToken;
 import picasso.parser.tokens.chars.LeftParenToken;
@@ -18,6 +17,7 @@ import picasso.parser.tokens.functions.FunctionToken;
 import picasso.parser.tokens.operations.EqualsToken;
 import picasso.parser.tokens.operations.OperationInterface;
 import picasso.parser.tokens.operations.PlusToken;
+import picasso.parser.tokens.operations.StringToken;
 
 /**
  * Parses a string into an expression tree based on rules for arithmetic.
