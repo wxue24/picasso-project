@@ -15,6 +15,7 @@ import picasso.parser.tokens.chars.LeftParenToken;
 import picasso.parser.tokens.chars.RightParenToken;
 import picasso.parser.tokens.functions.FunctionToken;
 import picasso.parser.tokens.operations.EqualsToken;
+import picasso.parser.tokens.operations.MinusToken;
 import picasso.parser.tokens.operations.OperationInterface;
 import picasso.parser.tokens.operations.PlusToken;
 import picasso.parser.tokens.operations.StringToken;
@@ -221,9 +222,6 @@ public class ExpressionTreeGenerator {
 		else
 			return CONSTANT;
 		
-		if (token instanceof MinusToken)
-			return ADD_OR_SUBTRACT;
-		else
-			return CONSTANT;
+	
 	}
 }
