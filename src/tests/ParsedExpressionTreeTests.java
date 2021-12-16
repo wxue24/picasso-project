@@ -12,19 +12,15 @@ import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.language.expressions.X;
 import picasso.parser.language.expressions.Y;
 import picasso.parser.language.expressions.BinaryOperators.Addition;
-
-import picasso.parser.language.expressions.BinaryOperators.Subtraction;
 import picasso.parser.language.expressions.BinaryOperators.Division;
 import picasso.parser.language.expressions.BinaryOperators.Exponentiation;
-import picasso.parser.language.expressions.BinaryOperators.Multiplication;
 import picasso.parser.language.expressions.BinaryOperators.Mod;
-
-
+import picasso.parser.language.expressions.BinaryOperators.Multiplication;
+import picasso.parser.language.expressions.BinaryOperators.Subtraction;
 import picasso.parser.language.expressions.MultiArgumentFunctions.ImageClip;
 import picasso.parser.language.expressions.MultiArgumentFunctions.ImageWrap;
 import picasso.parser.language.expressions.MultiArgumentFunctions.PerlinBW;
 import picasso.parser.language.expressions.MultiArgumentFunctions.PerlinColor;
-
 import picasso.parser.language.expressions.UnaryFunctions.Abs;
 import picasso.parser.language.expressions.UnaryFunctions.Atan;
 import picasso.parser.language.expressions.UnaryFunctions.Ceil;
@@ -33,15 +29,17 @@ import picasso.parser.language.expressions.UnaryFunctions.Cos;
 import picasso.parser.language.expressions.UnaryFunctions.Exp;
 import picasso.parser.language.expressions.UnaryFunctions.Floor;
 import picasso.parser.language.expressions.UnaryFunctions.Log;
+import picasso.parser.language.expressions.UnaryFunctions.RgbToYCrCb;
 import picasso.parser.language.expressions.UnaryFunctions.Sin;
 import picasso.parser.language.expressions.UnaryFunctions.Tan;
 import picasso.parser.language.expressions.UnaryFunctions.Wrap;
+import picasso.parser.language.expressions.UnaryFunctions.YCrCbtoRGB;
 
 /**
  * Tests of creating an expression tree from a string expression. Will have
  * compiler errors until some code is created.
  * 
-
+ * 
  * @author Sara Sprenkle, bslater
  */
 public class ParsedExpressionTreeTests {
@@ -157,7 +155,7 @@ public class ParsedExpressionTreeTests {
 		e = parser.makeExpression("wrap ( x + y )");
 		assertEquals(new Wrap(new Addition(new X(), new Y())), e);
 	}
-	
+
 	@Test
 	public void clampFunctionTests() {
 		ExpressionTreeNode e = parser.makeExpression("clamp( x )");
@@ -166,7 +164,7 @@ public class ParsedExpressionTreeTests {
 		e = parser.makeExpression("clamp ( x + y )");
 		assertEquals(new Clamp(new Addition(new X(), new Y())), e);
 	}
- 
+
 	@Test
 	public void variablesExpressionTests() {
 		Variables v = Variables.getInstance();
@@ -176,38 +174,38 @@ public class ParsedExpressionTreeTests {
 		e = parser.makeExpression("a");
 		assertEquals(new Floor(new X()), e);
 
-	} 
+	}
 
 	@Test
 	public void imageWrapFunctionTests() {
 		ExpressionTreeNode e = parser.makeExpression("imageWrap(\"floorx.jpg\", x + x, y)");
 		assertEquals(new ImageWrap("floorx.jpg", new Addition(new X(), new X()), new Y()), e);
 	}
-	
+
 	@Test
 	public void imageClipFunctionTests() {
 		ExpressionTreeNode e = parser.makeExpression("imageClip(\"floorx.jpg\", x + x, y)");
 		assertEquals(new ImageClip("floorx.jpg", new Addition(new X(), new X()), new Y()), e);
 	}
-	
+
 	@Test
 	public void perlinColorFunctionTests() {
 		ExpressionTreeNode e = parser.makeExpression("perlinColor(x, y)");
 		assertEquals(new PerlinColor(new X(), new Y()), e);
-		
+
 		e = parser.makeExpression("perlinColor(x, x+x)");
 		assertEquals(new PerlinColor(new X(), new Addition(new X(), new X())), e);
 	}
-	
+
 	@Test
 	public void perlinBWFunctionTests() {
 		ExpressionTreeNode e = parser.makeExpression("perlinBW(x, y)");
 		assertEquals(new PerlinBW(new X(), new Y()), e);
-		
+
 		e = parser.makeExpression("perlinBW(x, x+x)");
 		assertEquals(new PerlinBW(new X(), new Addition(new X(), new X())), e);
 	}
-	
+
 	@Test
 	public void atanFunctionTests() {
 		ExpressionTreeNode e = parser.makeExpression("atan( x )");
@@ -218,82 +216,77 @@ public class ParsedExpressionTreeTests {
 
 	}
 
-
-
-
 	@Test
 	public void subtractionExpressionTests() {
 		ExpressionTreeNode e = parser.makeExpression("x - y");
 		assertEquals(new Subtraction(new X(), new Y()), e);
-		
+
 		e = parser.makeExpression("x-y");
 		assertEquals(new Subtraction(new X(), new Y()), e);
-	
+
 		e = parser.makeExpression("[1,.3,-1] - y");
 		assertEquals(new Subtraction(new RGBColor(1, .3, -1), new Y()), e);
-	
+
 		e = parser.makeExpression("x - y - [ -.51, 0, 1]");
 		assertEquals(new Subtraction(new Subtraction(new X(), new Y()), new RGBColor(-.51, 0, 1)), e);
 	}
-	
 
 	@Test
 	public void divisionExpressionTests() {
 		ExpressionTreeNode e = parser.makeExpression("x / y");
 		assertEquals(new Division(new X(), new Y()), e);
-		
+
 		e = parser.makeExpression("x/y");
 		assertEquals(new Division(new X(), new Y()), e);
-	
+
 		e = parser.makeExpression("[1,.3,-1] / y");
 		assertEquals(new Division(new RGBColor(1, .3, -1), new Y()), e);
-	
+
 		e = parser.makeExpression("x / y / [ -.51, 0, 1]");
 		assertEquals(new Division(new Division(new X(), new Y()), new RGBColor(-.51, 0, 1)), e);
 	}
-	
+
 	@Test
 	public void multiplicationExpressionTests() {
 		ExpressionTreeNode e = parser.makeExpression("x * y");
 		assertEquals(new Multiplication(new X(), new Y()), e);
-		
+
 		e = parser.makeExpression("x*y");
 		assertEquals(new Multiplication(new X(), new Y()), e);
-	
+
 		e = parser.makeExpression("[1,.3,-1] * y");
 		assertEquals(new Multiplication(new RGBColor(1, .3, -1), new Y()), e);
-	
+
 		e = parser.makeExpression("x * y * [ -.51, 0, 1]");
 		assertEquals(new Multiplication(new Multiplication(new X(), new Y()), new RGBColor(-.51, 0, 1)), e);
 	}
-	
-	
+
 	@Test
 	public void exponentiationExpressionTests() {
 		ExpressionTreeNode e = parser.makeExpression("x ^ y");
 		assertEquals(new Exponentiation(new X(), new Y()), e);
-		
+
 		e = parser.makeExpression("x^y");
 		assertEquals(new Exponentiation(new X(), new Y()), e);
-	
+
 		e = parser.makeExpression("[1,.3,-1] ^ y");
 		assertEquals(new Exponentiation(new RGBColor(1, .3, -1), new Y()), e);
-	
+
 		e = parser.makeExpression("x ^ y ^ [ -.51, 0, 1]");
 		assertEquals(new Exponentiation(new Exponentiation(new X(), new Y()), new RGBColor(-.51, 0, 1)), e);
 	}
-	
+
 	@Test
 	public void modExpressionTests() {
 		ExpressionTreeNode e = parser.makeExpression("x % y");
 		assertEquals(new Mod(new X(), new Y()), e);
-		
+
 		e = parser.makeExpression("x%y");
 		assertEquals(new Mod(new X(), new Y()), e);
-	
+
 		e = parser.makeExpression("[1,.3,-1] % y");
 		assertEquals(new Mod(new RGBColor(1, .3, -1), new Y()), e);
-	
+
 		e = parser.makeExpression("x % y % [ -.51, 0, 1]");
 		assertEquals(new Mod(new Mod(new X(), new Y()), new RGBColor(-.51, 0, 1)), e);
 	}
@@ -317,7 +310,17 @@ public class ParsedExpressionTreeTests {
 		assertEquals(new Log(new Addition(new X(), new Y())), e);
 	}
 
+	@Test
+	public void rgbToYCrCbFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("rgbToYCrCb( x )");
+		assertEquals(new RgbToYCrCb(new X()), e);
+	}
+
+	@Test
+	public void yCrCbtoRGBFunctionTests() {
+		ExpressionTreeNode e = parser.makeExpression("yCrCbtoRGB( x )");
+		assertEquals(new YCrCbtoRGB(new X()), e);
+
+	}
+
 }
-
-
-

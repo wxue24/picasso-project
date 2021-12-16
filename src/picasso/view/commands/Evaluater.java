@@ -23,12 +23,10 @@ import picasso.view.VariablesPanel;
 public class Evaluater implements Command<Pixmap> {
 	public static final double DOMAIN_MIN = -1;
 	public static final double DOMAIN_MAX = 1;
-	private InputPanel input;
 	private ExpressionHistoryPanel exphist;
 	private VariablesPanel vpanel;
 
-	public Evaluater(InputPanel input, ExpressionHistoryPanel exphist, VariablesPanel vpanel) {
-		this.input = input;
+	public Evaluater(ExpressionHistoryPanel exphist, VariablesPanel vpanel) {
 		this.exphist = exphist;
 		this.vpanel = vpanel;
 	}
@@ -57,7 +55,7 @@ public class Evaluater implements Command<Pixmap> {
 						RGBColor rgb = null;
 						if (expr instanceof StringFunction) {
 							rgb = expr.evaluate(imageX, imageY);
-						}else {
+						} else {
 							rgb = expr.evaluate(evalX, evalY);
 						}
 //						System.out.println(rgb);
@@ -89,7 +87,7 @@ public class Evaluater implements Command<Pixmap> {
 		// generate expression trees from strings, or you can create expression
 		// objects directly (as in the commented statement below).
 
-		String text = input.getText();
+		String text = InputPanel.getText();
 
 		// Add to history
 		exphist.addExpression(text);
