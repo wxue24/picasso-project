@@ -16,6 +16,9 @@ import picasso.parser.tokens.operations.StringToken;
  */
 public class StringAnalyzer implements SemanticAnalyzerInterface {
 	@Override
+	/**
+	 * 
+	 */
 	public ExpressionTreeNode generateExpressionTree(Stack<Token> tokens) {
 		return new StringFunction((StringToken) tokens.pop());
 	}
