@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import picasso.model.Pixmap;
 import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
+import picasso.parser.language.expressions.RGBColor;
+import picasso.parser.language.expressions.UnaryFunctions.StringFunction;
 import picasso.util.Command;
 import picasso.view.ErrorWindow;
 import picasso.view.ExpressionHistoryPanel;
@@ -51,7 +53,16 @@ public class Evaluater implements Command<Pixmap> {
 					double evalY = imageToDomainScale(imageY, size.height);
 					for (int imageX = 0; imageX < size.width; imageX++) {
 						double evalX = imageToDomainScale(imageX, size.width);
-						Color pixelColor = expr.evaluate(evalX, evalY).toJavaColor();
+//						System.out.println(evalY);
+						RGBColor rgb = null;
+						if (expr instanceof StringFunction) {
+							rgb = expr.evaluate(imageX, imageY);
+						}else {
+							rgb = expr.evaluate(evalX, evalY);
+						}
+//						System.out.println(rgb);
+						Color pixelColor = rgb.toJavaColor();
+//						System.out.println(evalY);
 						target.setColor(imageX, imageY, pixelColor);
 					}
 				}

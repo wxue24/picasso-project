@@ -10,12 +10,12 @@ import picasso.parser.tokens.chars.CharToken;
  * @author Garrett Mize
  *
  */
-public class BangToken extends CharToken implements OperationInterface {
+public class InverseToken extends CharToken implements OperationInterface {
 
 	/**
 	 * @param ch
 	 */
-	public BangToken() {
+	public InverseToken() {
 			super(CharConstants.BANG);
 	}
 }

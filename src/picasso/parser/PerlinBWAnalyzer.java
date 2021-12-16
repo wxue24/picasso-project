@@ -8,8 +8,8 @@ import java.util.Stack;
 import picasso.parser.language.ExpressionTreeNode;
 import picasso.parser.language.expressions.MultiArgumentFunctions.PerlinBW;
 import picasso.parser.language.expressions.MultiArgumentFunctions.PerlinColor;
-import picasso.parser.tokens.StringToken;
 import picasso.parser.tokens.Token;
+import picasso.parser.tokens.operations.StringToken;
 
 /**
  * Handles parsing the PerlinBW function

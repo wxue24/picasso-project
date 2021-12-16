@@ -13,7 +13,7 @@ import picasso.parser.tokens.Token;
  * @author Garrett Mize
  *
  */
-public class BangAnalyzer extends UnaryFunctionAnalyzer {
+public class InverseAnalyzer extends UnaryFunctionAnalyzer {
 	
 	@Override
 	public ExpressionTreeNode generateExpressionTree(Stack<Token> tokens) {
