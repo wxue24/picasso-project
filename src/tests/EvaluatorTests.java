@@ -15,6 +15,11 @@ import picasso.parser.language.expressions.RGBColor;
 import picasso.parser.language.expressions.X;
 import picasso.parser.language.expressions.Y;
 import picasso.parser.language.expressions.BinaryOperators.Addition;
+import picasso.parser.language.expressions.BinaryOperators.Division;
+import picasso.parser.language.expressions.BinaryOperators.Exponentiation;
+import picasso.parser.language.expressions.BinaryOperators.Mod;
+import picasso.parser.language.expressions.BinaryOperators.Multiplication;
+import picasso.parser.language.expressions.BinaryOperators.Subtraction;
 import picasso.parser.language.expressions.MultiArgumentFunctions.ImageClip;
 import picasso.parser.language.expressions.MultiArgumentFunctions.ImageWrap;
 import picasso.parser.language.expressions.MultiArgumentFunctions.PerlinBW;
@@ -28,7 +33,6 @@ import picasso.parser.language.expressions.UnaryFunctions.Cos;
 import picasso.parser.language.expressions.UnaryFunctions.Exp;
 import picasso.parser.language.expressions.UnaryFunctions.Floor;
 import picasso.parser.language.expressions.UnaryFunctions.Log;
-import picasso.parser.language.expressions.UnaryFunctions.RgbToYCrCb;
 import picasso.parser.language.expressions.UnaryFunctions.Sin;
 import picasso.parser.language.expressions.UnaryFunctions.Tan;
 import picasso.parser.language.expressions.UnaryFunctions.Wrap;
@@ -50,6 +54,33 @@ public class EvaluatorTests {
 	@BeforeEach
 	public void setUp() throws Exception {
 		parser = new ExpressionTreeGenerator();
+	}
+
+	@Test
+	public void testBinaryOperators() {
+		Addition addition = new Addition(new X(), new Y());
+		double value = 0.4 - 1;
+		assertEquals(new RGBColor(value, value, value), addition.evaluate(0.4, -1));
+
+		Division division = new Division(new X(), new Y());
+		value = 0.4 / -1;
+		assertEquals(new RGBColor(value, value, value), division.evaluate(0.4, -1));
+
+		Exponentiation exponentiation = new Exponentiation(new X(), new Y());
+		value = Math.pow(0.4, -1);
+		assertEquals(new RGBColor(value, value, value), exponentiation.evaluate(0.4, -1));
+
+		Mod mod = new Mod(new X(), new Y());
+		value = 0.4 % -1;
+		assertEquals(new RGBColor(value, value, value), mod.evaluate(0.4, -1));
+
+		Multiplication multiplication = new Multiplication(new X(), new Y());
+		value = 0.4 * -1;
+		assertEquals(new RGBColor(value, value, value), multiplication.evaluate(0.4, -1));
+
+		Subtraction subtraction = new Subtraction(new X(), new Y());
+		value = 0.4 + 1;
+		assertEquals(new RGBColor(value, value, value), subtraction.evaluate(0.4, -1));
 	}
 
 	@Test
@@ -399,5 +430,4 @@ public class EvaluatorTests {
 
 	}
 
-	
 }
