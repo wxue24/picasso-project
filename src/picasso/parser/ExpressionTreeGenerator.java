@@ -9,15 +9,20 @@ import picasso.parser.tokens.CharTokenFactory;
 import picasso.parser.tokens.ColorToken;
 import picasso.parser.tokens.IdentifierToken;
 import picasso.parser.tokens.NumberToken;
-import picasso.parser.tokens.StringToken;
 import picasso.parser.tokens.Token;
 import picasso.parser.tokens.chars.CommaToken;
 import picasso.parser.tokens.chars.LeftParenToken;
 import picasso.parser.tokens.chars.RightParenToken;
 import picasso.parser.tokens.functions.FunctionToken;
+import picasso.parser.tokens.operations.DivideToken;
 import picasso.parser.tokens.operations.EqualsToken;
+import picasso.parser.tokens.operations.ExponentiateToken;
+import picasso.parser.tokens.operations.MinusToken;
+import picasso.parser.tokens.operations.ModToken;
+import picasso.parser.tokens.operations.MultiplyToken;
 import picasso.parser.tokens.operations.OperationInterface;
 import picasso.parser.tokens.operations.PlusToken;
+import picasso.parser.tokens.operations.StringToken;
 
 /**
  * Parses a string into an expression tree based on rules for arithmetic.
@@ -33,6 +38,7 @@ public class ExpressionTreeGenerator {
 	private static final int GROUPING = 1; // parentheses
 	private static final int ADD_OR_SUBTRACT = 2;
 	private static final int MULTIPLY_OR_DIVIDE = 3;
+	private static final int EXPONENTIATE = 4;
 
 	/**
 	 * Converts the given string into expression tree for easier manipulation.
@@ -218,7 +224,19 @@ public class ExpressionTreeGenerator {
 
 		if (token instanceof PlusToken)
 			return ADD_OR_SUBTRACT;
+		if (token instanceof MinusToken)
+			return ADD_OR_SUBTRACT;
+		if (token instanceof MultiplyToken)
+			return MULTIPLY_OR_DIVIDE;
+		if (token instanceof DivideToken)
+			return MULTIPLY_OR_DIVIDE;
+		if (token instanceof ModToken)
+			return MULTIPLY_OR_DIVIDE;
+		if (token instanceof ExponentiateToken)
+			return EXPONENTIATE;
 		else
 			return CONSTANT;
+		
+	
 	}
 }

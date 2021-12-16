@@ -1,7 +1,6 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
@@ -15,7 +14,6 @@ import picasso.parser.language.Variables;
 import picasso.parser.tokens.ColorToken;
 import picasso.parser.tokens.IdentifierToken;
 import picasso.parser.tokens.NumberToken;
-import picasso.parser.tokens.StringToken;
 import picasso.parser.tokens.Token;
 import picasso.parser.tokens.chars.CommaToken;
 import picasso.parser.tokens.chars.LeftParenToken;
@@ -28,18 +26,24 @@ import picasso.parser.tokens.functions.CosToken;
 import picasso.parser.tokens.functions.ExpToken;
 import picasso.parser.tokens.functions.FloorToken;
 import picasso.parser.tokens.functions.ImageClipToken;
-
 import picasso.parser.tokens.functions.ImageWrapToken;
-
 import picasso.parser.tokens.functions.LogToken;
 import picasso.parser.tokens.functions.PerlinBWToken;
 import picasso.parser.tokens.functions.PerlinColorToken;
 import picasso.parser.tokens.functions.RandomToken;
+import picasso.parser.tokens.functions.RgbToYCrCbToken;
 import picasso.parser.tokens.functions.SinToken;
 import picasso.parser.tokens.functions.TanToken;
 import picasso.parser.tokens.functions.WrapToken;
+import picasso.parser.tokens.functions.YCrCbtoRGBToken;
+import picasso.parser.tokens.operations.DivideToken;
 import picasso.parser.tokens.operations.EqualsToken;
+import picasso.parser.tokens.operations.ExponentiateToken;
+import picasso.parser.tokens.operations.MinusToken;
+import picasso.parser.tokens.operations.ModToken;
+import picasso.parser.tokens.operations.MultiplyToken;
 import picasso.parser.tokens.operations.PlusToken;
+import picasso.parser.tokens.operations.StringToken;
 
 public class TokenizerTest {
 
@@ -198,9 +202,21 @@ public class TokenizerTest {
 		assertEquals(new LeftParenToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("x"), tokens.get(2));
 		assertEquals(new RightParenToken(), tokens.get(3));
-		
-	
-		
+
+		expression = "rgbToYCrCb(x)";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new RgbToYCrCbToken(), tokens.get(0));
+		assertEquals(new LeftParenToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("x"), tokens.get(2));
+		assertEquals(new RightParenToken(), tokens.get(3));
+
+		expression = "yCrCbtoRGB(x)";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new YCrCbtoRGBToken(), tokens.get(0));
+		assertEquals(new LeftParenToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("x"), tokens.get(2));
+		assertEquals(new RightParenToken(), tokens.get(3));
+
 	}
 	
 
@@ -221,6 +237,31 @@ public class TokenizerTest {
 		tokens = tokenizer.parseTokens(expression);
 		assertEquals(new IdentifierToken("x"), tokens.get(0));
 		assertEquals(new PlusToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("y"), tokens.get(2));
+		expression = "x - y";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new IdentifierToken("x"), tokens.get(0));
+		assertEquals(new MinusToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("y"), tokens.get(2));
+		expression = "x / y";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new IdentifierToken("x"), tokens.get(0));
+		assertEquals(new DivideToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("y"), tokens.get(2));
+		expression = "x * y";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new IdentifierToken("x"), tokens.get(0));
+		assertEquals(new MultiplyToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("y"), tokens.get(2));
+		expression = "x ^ y";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new IdentifierToken("x"), tokens.get(0));
+		assertEquals(new ExponentiateToken(), tokens.get(1));
+		assertEquals(new IdentifierToken("y"), tokens.get(2));
+		expression = "x % y";
+		tokens = tokenizer.parseTokens(expression);
+		assertEquals(new IdentifierToken("x"), tokens.get(0));
+		assertEquals(new ModToken(), tokens.get(1));
 		assertEquals(new IdentifierToken("y"), tokens.get(2));
 
 	}
@@ -245,7 +286,6 @@ public class TokenizerTest {
 	public void testTokenizeMultiArgumentFunctionExpression() {
 		String expression = "imageWrap(\"AmoebaMorris.png\", x + x, y)";
 		tokens = tokenizer.parseTokens(expression);
-		assertEquals(new ImageClipToken(), tokens.get(0));
 		assertEquals(new ImageWrapToken(), tokens.get(0));
 		assertEquals(new LeftParenToken(), tokens.get(1));
 		assertEquals(new StringToken("AmoebaMorris.png"), tokens.get(2));

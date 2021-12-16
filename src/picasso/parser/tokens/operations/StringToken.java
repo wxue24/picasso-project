@@ -1,7 +1,9 @@
 /**
  * 
  */
-package picasso.parser.tokens;
+package picasso.parser.tokens.operations;
+
+import picasso.parser.tokens.Token;
 
 /**
  * Represents a string token

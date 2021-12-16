@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import picasso.model.Pixmap;
 import picasso.parser.ExpressionTreeGenerator;
 import picasso.parser.language.ExpressionTreeNode;
+import picasso.parser.language.expressions.RGBColor;
+import picasso.parser.language.expressions.UnaryFunctions.StringFunction;
 import picasso.util.Command;
 import picasso.view.ErrorWindow;
 import picasso.view.ExpressionHistoryPanel;
@@ -21,12 +23,10 @@ import picasso.view.VariablesPanel;
 public class Evaluater implements Command<Pixmap> {
 	public static final double DOMAIN_MIN = -1;
 	public static final double DOMAIN_MAX = 1;
-	private InputPanel input;
 	private ExpressionHistoryPanel exphist;
 	private VariablesPanel vpanel;
 
-	public Evaluater(InputPanel input, ExpressionHistoryPanel exphist, VariablesPanel vpanel) {
-		this.input = input;
+	public Evaluater(ExpressionHistoryPanel exphist, VariablesPanel vpanel) {
 		this.exphist = exphist;
 		this.vpanel = vpanel;
 	}
@@ -51,7 +51,16 @@ public class Evaluater implements Command<Pixmap> {
 					double evalY = imageToDomainScale(imageY, size.height);
 					for (int imageX = 0; imageX < size.width; imageX++) {
 						double evalX = imageToDomainScale(imageX, size.width);
-						Color pixelColor = expr.evaluate(evalX, evalY).toJavaColor();
+//						System.out.println(evalY);
+						RGBColor rgb = null;
+						if (expr instanceof StringFunction) {
+							rgb = expr.evaluate(imageX, imageY);
+						} else {
+							rgb = expr.evaluate(evalX, evalY);
+						}
+//						System.out.println(rgb);
+						Color pixelColor = rgb.toJavaColor();
+//						System.out.println(evalY);
 						target.setColor(imageX, imageY, pixelColor);
 					}
 				}
@@ -78,7 +87,7 @@ public class Evaluater implements Command<Pixmap> {
 		// generate expression trees from strings, or you can create expression
 		// objects directly (as in the commented statement below).
 
-		String text = input.getText();
+		String text = InputPanel.getText();
 
 		// Add to history
 		exphist.addExpression(text);
