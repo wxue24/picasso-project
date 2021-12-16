@@ -218,7 +218,6 @@ public class TokenizerTest {
 		assertEquals(new RightParenToken(), tokens.get(3));
 
 	}
-	
 
 	@Test
 	public void testTokenizeCombinedFunctionExpression() {
