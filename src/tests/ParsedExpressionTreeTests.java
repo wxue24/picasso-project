@@ -227,4 +227,5 @@ public class ParsedExpressionTreeTests {
 		e = parser.makeExpression("log( x + y )");
 		assertEquals(new Log(new Addition(new X(), new Y())), e);
 	}
+	
 }

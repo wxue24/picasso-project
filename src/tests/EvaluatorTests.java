@@ -28,7 +28,6 @@ import picasso.parser.language.expressions.UnaryFunctions.Cos;
 import picasso.parser.language.expressions.UnaryFunctions.Exp;
 import picasso.parser.language.expressions.UnaryFunctions.Floor;
 import picasso.parser.language.expressions.UnaryFunctions.Log;
-import picasso.parser.language.expressions.UnaryFunctions.RgbToYCrCb;
 import picasso.parser.language.expressions.UnaryFunctions.Sin;
 import picasso.parser.language.expressions.UnaryFunctions.Tan;
 import picasso.parser.language.expressions.UnaryFunctions.Wrap;
