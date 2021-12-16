@@ -23,9 +23,8 @@ import javax.swing.JScrollPane;
 public class ExpressionHistoryPanel extends JPanel {
 	private List<String> expressions;
 	private JPanel history;
-	private InputPanel input;
 
-	public ExpressionHistoryPanel(InputPanel input) {
+	public ExpressionHistoryPanel() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		add(new JLabel("History"));
@@ -37,7 +36,6 @@ public class ExpressionHistoryPanel extends JPanel {
 		super.setSize(size);
 
 		expressions = new ArrayList<>();
-		this.input = input;
 
 		history = new JPanel();
 		history.setLayout(new BoxLayout(history, BoxLayout.Y_AXIS));
@@ -81,7 +79,7 @@ public class ExpressionHistoryPanel extends JPanel {
 		JButton evaluateButton = new JButton("Set current expression");
 		evaluateButton.addActionListener(e -> {
 			// Sets main input to expression
-			input.setText(exp);
+			InputPanel.setText(exp);
 		});
 		p.add(evaluateButton);
 		return p;

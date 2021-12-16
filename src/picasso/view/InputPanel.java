@@ -21,7 +21,7 @@ import javax.swing.JTextArea;
  */
 public class InputPanel extends JPanel {
 
-	private JTextArea text;
+	private static JTextArea text;
 
 	public InputPanel() {
 		setLayout(new FlowLayout());
@@ -32,18 +32,20 @@ public class InputPanel extends JPanel {
 	}
 
 	/**
+	 * Gets text from text field
 	 * 
 	 * @return text from text area
 	 */
-	public String getText() {
+	public static String getText() {
 		return text.getText();
 	}
 
 	/**
+	 * Sets text of text field
 	 * 
-	 * @param s string to set input to
+	 * @param s
 	 */
-	public void setText(String s) {
+	public static void setText(String s) {
 		text.setText(s);
 	}
 
@@ -52,7 +54,7 @@ public class InputPanel extends JPanel {
 	 * 
 	 * @param filename
 	 */
-	public void write(String filename) {
+	public static void write(String filename) {
 		try {
 			// Create file
 			File myObj = new File(filename);
