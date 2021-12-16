@@ -1,9 +1,13 @@
 package picasso.model;
 
-import java.awt.*;
-import java.awt.image.*;
-import java.io.*;
-import javax.imageio.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 /**
  * Class for manipulating graphics images, originally developed in C++.
@@ -47,6 +51,7 @@ public class Pixmap {
 	public Pixmap() {
 		this(DEFAULT_SIZE.width, DEFAULT_SIZE.height, DEFAULT_COLOR);
 	}
+
 	/**
 	 * 
 	 * @param image
@@ -185,7 +190,6 @@ public class Pixmap {
 		try {
 			myFileName = fileName;
 			myImage = ImageIO.read(new File(myFileName));
-			mySize = new Dimension(myImage.getWidth(), myImage.getHeight());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -222,6 +226,5 @@ public class Pixmap {
 		result.setRGB(0, 0, from.width, from.height, data, 0, from.width);
 		return result;
 	}
-	
-	
+
 }
