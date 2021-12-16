@@ -25,6 +25,8 @@ public class Evaluater implements Command<Pixmap> {
 	public static final double DOMAIN_MAX = 1;
 	private ExpressionHistoryPanel exphist;
 	private VariablesPanel vpanel;
+	
+	private ExpressionTreeNode expr;
 
 	public Evaluater(ExpressionHistoryPanel exphist, VariablesPanel vpanel) {
 		this.exphist = exphist;
@@ -38,7 +40,7 @@ public class Evaluater implements Command<Pixmap> {
 	public void execute(Pixmap target) {
 		try {
 			// create the expression to evaluate just once
-			ExpressionTreeNode expr = createExpression();
+			expr = createExpression();
 			if (expr == null) {
 				ErrorWindow.getInstance().showError("Can't evaluate empty expressions");
 			} else {
@@ -68,6 +70,13 @@ public class Evaluater implements Command<Pixmap> {
 		} catch (Exception e) {
 			ErrorWindow.getInstance().showError(e.getMessage());
 		}
+	}
+	
+	public RGBColor evaluateCoordinates(double x, double y) {
+		if (expr!= null) {
+			return expr.evaluate(x, y);
+		}
+		return new RGBColor(0.0,0.0,0.0);
 	}
 
 	/**
@@ -99,6 +108,10 @@ public class Evaluater implements Command<Pixmap> {
 			return node;
 		return null;
 
+	}
+
+	public ExpressionTreeNode getExpr() {
+		return expr;
 	}
 
 }
