@@ -92,7 +92,10 @@ Operators have the following precedence (listed from highest to lowest):
     * If a newly added variable has the same name as an existing variable, the new variable will override the existing
 * Display a history of expressions (attempted evaluations included) on the right panel
     * The most recent expressions will be at the top
-    * To set the input to an expression click the "set current expression" button next to the expression
+    * To set the input to an expression click the "set current expression" button next to the expression 
+* Allow users to "debug" expressions by using the mouse to display the point and evaluated values at that point
+        * Move the move to a certain point returns the coordinates of the image
+        * Also returns the RGB values of the three coordinates (0-255).
 
 ## Project Organization
 
