@@ -94,7 +94,7 @@ Operators have the following precedence (listed from highest to lowest):
     * The most recent expressions will be at the top
     * To set the input to an expression click the "set current expression" button next to the expression 
 * Allow users to "debug" expressions by using the mouse to display the point and evaluated values at that point
-        * Move the moouse to a certain point returns the coordinates of the image
+        * Move the mouse to a certain point returns the coordinates of the image
         * Also returns the RGB values of the three coordinates (0-255).
 
 ## Project Organization
